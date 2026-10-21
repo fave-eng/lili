@@ -1,0 +1,17 @@
+{
+  "id": "lesson-1",
+  "number": 1,
+  "title": "New A2.1 lesson",
+  "subtitle": "New homework assignment",
+  "status": "draft",
+  "vocabularyId": null,
+  "grammarIds": [],
+  "publishedAt": "",
+  "totalPoints": 0,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "templateNote": "Create lesson-1.json only when the first real homework is ready. Keep it absent for an empty site.",
+  "blocks": []
+}
