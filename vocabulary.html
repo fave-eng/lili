@@ -64,9 +64,11 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="config.js" defer></script>
-  <script src="data/vocabulary-data.js?v=lili-irregular-20261023-v1" defer></script>
+  <script src="data/vocabulary-data.js?v=lili-irregular-forms-20261023-v2" defer></script>
   <script src="data/grammar-data.js?v=lili-1b-20261023" defer></script>
-  <script src="app.js?v=lili-1b-20261023" defer></script>
+  <script src="app.js?v=lili-forms-20261023-v2" defer></script>
+  <link rel="stylesheet" href="irregular-verbs.css?v=20261023-v2">
+  <script src="irregular-verbs.js?v=20261023-v2" defer></script>
 </head>
 <body class="has-bottom-nav" data-page="vocabulary" data-view="vocabulary">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -84,6 +86,19 @@
   </header>
 
   <main id="main" class="main-content container">
+
+    <section class="section irregular-forms-feature" id="irregular-forms-feature" hidden aria-labelledby="irregular-forms-heading">
+      <div class="irregular-head"><div><span class="eyebrow">IRREGULAR VERBS · EXTRA PRACTICE</span><h2 id="irregular-forms-heading">Write all three forms</h2><p>Тест форм не влияет на общий прогресс изученных слов. Каждый глагол засчитывается только после правильного написания всех его форм.</p></div>
+      <a class="irregular-pill" href="knowledge.html#kb-irregular-title">Reference & daily verb →</a></div>
+      <div class="irregular-progress" id="irregular-forms-progress" role="status" aria-live="polite">Загрузка прогресса…</div>
+      <div id="irregular-forms-test"></div>
+      <details class="irregular-reference" id="irregular-table-details"><summary>Полная таблица: V1 / V2 / V3 / Перевод / Озвучка</summary>
+        <label for="irregular-table-search" class="irregular-search-label">Поиск по любой форме или переводу</label>
+        <input type="search" id="irregular-table-search" placeholder="go, went, писать, читать" autocomplete="off">
+        <div class="irregular-scroll"><table id="irregular-table"><thead><tr><th>V1 · Base</th><th>V2 · Past</th><th>V3 · Participle</th><th>Перевод</th></tr></thead><tbody id="irregular-table-body"></tbody></table></div>
+        <p id="irregular-table-count" class="muted"></p>
+      </details>
+    </section>
 
     <section class="section reveal">
       <div id="vocabulary-root"></div>

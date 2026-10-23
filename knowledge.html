@@ -8,9 +8,9 @@
   <link rel="stylesheet" href="styles.css?v=lili-1b-20261023">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="config.js" defer></script>
-  <script src="data/vocabulary-data.js?v=lili-irregular-20261023-v1" defer></script>
+  <script src="data/vocabulary-data.js?v=lili-irregular-forms-20261023-v2" defer></script>
   <script src="data/grammar-data.js?v=lili-1b-20261023" defer></script>
-  <script src="app.js?v=lili-1b-20261023" defer></script>
+  <script src="app.js?v=lili-forms-20261023-v2" defer></script>
 <style>
   .kb-learning { max-width: 1160px; }
   .kb-study-head { display:flex; justify-content:space-between; align-items:end; gap:20px; margin-bottom:18px; flex-wrap:wrap; }
@@ -52,6 +52,8 @@
   @media(max-width:700px) { .kb-guide-grid,.kb-rules-grid{grid-template-columns:1fr;} .kb-daily-forms{gap:6px;} .kb-daily-forms div{padding:9px;} .kb-study-card{padding:18px;} }
   @media(max-width:370px) { .kb-daily-forms{grid-template-columns:1fr;} }
 </style>
+  <link rel="stylesheet" href="irregular-verbs.css?v=20261023-v2">
+  <script src="irregular-verbs.js?v=20261023-v2" defer></script>
 </head>
 <body class="has-bottom-nav" data-page="knowledge" data-view="knowledge">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -87,6 +89,7 @@
       </div>
     </section>
 
+    <section class="section kb-forms-mastery" aria-labelledby="kb-mastery-heading"><div class="kb-study-head"><div><span class="eyebrow">INDEPENDENT PROGRESS</span><h2 id="kb-mastery-heading">Writing the 3 forms</h2><p>Отдельный результат письменного теста. Не входит в общий прогресс Vocabulary.</p></div><a class="btn btn-primary" href="vocabulary.html?id=vocab-irregular-verbs#irregular-forms-feature">Пройти тест форм →</a></div><div class="irregular-progress" id="kb-irregular-forms-progress" role="status" aria-live="polite">Загрузка результата…</div></section>
     <section class="section" aria-labelledby="kb-forms-title">
       <div class="kb-study-head"><div><span class="eyebrow">QUICK REFERENCE</span><h2 id="kb-forms-title">When do we use each verb form?</h2><p>Эти три формы помогают распознавать времена и правильно строить предложения.</p></div></div>
       <div class="kb-rules-grid">
@@ -106,7 +109,7 @@
     </section>
 
     <section class="section" aria-labelledby="kb-how-title">
-      <article class="kb-study-card kb-steps"><span class="eyebrow">STUDY ROUTINE</span><h2 id="kb-how-title">Как учить слова эффективнее</h2><ol><li><b>Смотри</b> глагол дня и пробуй вспомнить две другие формы без подсказки.</li><li><b>Открывай карточки</b> в Vocabulary — перевод появляется после переворота.</li><li><b>Проходи тест</b> — только правильный ответ в тесте отмечает слово как изученное.</li><li><b>Отмечай сложные</b> слова кнопкой Difficult и повторяй их отдельно.</li></ol><p><a class="kb-secondary-link" href="vocabulary.html?id=vocab-irregular-verbs">Перейти к тренировке →</a></p></article>
+      <article class="kb-study-card kb-steps"><span class="eyebrow">STUDY ROUTINE</span><h2 id="kb-how-title">Как учить слова эффективнее</h2><ol><li><b>Смотри</b> глагол дня и пробуй вспомнить две другие формы без подсказки.</li><li><b>Открывай карточки</b> в Vocabulary — перевод появляется после переворота.</li><li><b>Проходи тест</b> — только правильный ответ в тесте отмечает слово как изученное.</li><li><b>Для V1/V2/V3 проходи отдельный письменный тест и смотри второй прогресс выше. Отмечай сложные</b> слова кнопкой Difficult и повторяй их отдельно.</li></ol><p><a class="kb-secondary-link" href="vocabulary.html?id=vocab-irregular-verbs">Перейти к тренировке →</a></p></article>
     </section>
   </main>
   <nav class="bottom-nav" aria-label="Main navigation">
@@ -138,16 +141,16 @@
     const index = ((Math.floor((dateKey - startDay) / 86400000) % verbs.length) + verbs.length) % verbs.length;
     const word = verbs[index];
     daily.innerHTML = `<span class="kb-date">${esc(today.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'}))} · Глагол ${index + 1} из ${verbs.length}</span>
-      <div class="kb-daily-verb">${esc(word.base)}</div><div class="kb-daily-forms">
+      <div class="kb-daily-verb">${esc(word.base)} <button class="iv-sound" type="button" data-iv-say="${esc(word.id)}" data-iv-form="base" aria-label="Listen: ${esc(word.base)}">🔊</button></div><div class="kb-daily-forms">
       <div><span>V1 · Present</span><strong>${esc(word.base)}</strong></div>
-      <div><span>V2 · Past</span><strong>${esc(word.past)}</strong></div>
-      <div><span>V3 · Participle</span><strong>${esc(word.participle)}</strong></div></div>
+      <div><span>V2 · Past</span><strong>${esc(word.past)}</strong><button class="iv-sound" type="button" data-iv-say="${esc(word.id)}" data-iv-form="past" aria-label="Listen: ${esc(word.past)}">🔊</button></div>
+      <div><span>V3 · Participle</span><strong>${esc(word.participle)}</strong>${word.participle !== "—" ? `<button class="iv-sound" type="button" data-iv-say="${esc(word.id)}" data-iv-form="participle" aria-label="Listen: ${esc(word.participle)}">🔊</button>` : ""}</div></div>
       <p class="kb-ru"><strong>Перевод:</strong> ${esc(word.ru)}</p>
-      <p class="muted">Попробуй произнести все три формы и вспомнить перевод без подсказки.</p>`;
+      <p class="muted">Попробуй вспомнить формы и перевод. Нажми 🔊 для озвучки.</p>`;
     const drawTable = () => {
       const q = search.value.trim().toLocaleLowerCase('ru');
       const matches = verbs.filter(v => [v.base,v.past,v.participle,v.ru].some(x=>String(x).toLocaleLowerCase('ru').includes(q)));
-      body.innerHTML = matches.length ? matches.map(v=>`<tr><td>${esc(v.base)}</td><td>${esc(v.past)}</td><td>${esc(v.participle)}</td><td>${esc(v.ru)}</td></tr>`).join('') : '<tr><td colspan="4">Не найдено. Попробуйте другое слово.</td></tr>';
+      body.innerHTML = matches.length ? matches.map(v=>`<tr><td>${esc(v.base)} <button class="iv-sound" type="button" data-iv-say="${esc(v.id)}" data-iv-form="base" aria-label="Listen: ${esc(v.base)}">🔊</button></td><td>${esc(v.past)} <button class="iv-sound" type="button" data-iv-say="${esc(v.id)}" data-iv-form="past" aria-label="Listen: ${esc(v.past)}">🔊</button></td><td>${esc(v.participle)} ${v.participle !== "—" ? `<button class="iv-sound" type="button" data-iv-say="${esc(v.id)}" data-iv-form="participle" aria-label="Listen: ${esc(v.participle)}">🔊</button>` : ""}</td><td>${esc(v.ru)}</td></tr>`).join('') : '<tr><td colspan="4">Не найдено. Попробуйте другое слово.</td></tr>';
       count.textContent = `Показано: ${matches.length} из ${verbs.length}`;
     };
     search.addEventListener('input', drawTable);

@@ -347,6 +347,7 @@
         .map(([wordKey]) => wordKey);
       storage.write(key('difficult_words'), difficult);
       CloudService.queue('vocabulary');
+      window.dispatchEvent(new Event('lili-vocabulary-progress-updated'));
       return ok;
     },
     loadGrammarProgress() {
@@ -418,6 +419,7 @@
           vocabulary.topics[row.topic_id] = { tests: [...merged.values()] };
         });
         storage.write(key('vocabulary'), normalizeVocabularyProgress(vocabulary));
+        window.dispatchEvent(new Event('lili-vocabulary-progress-updated'));
 
         const grammar = this.loadGrammarProgress();
         (grammarResponse.data || []).forEach((row) => {
