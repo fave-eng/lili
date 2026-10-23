@@ -1,10 +1,13 @@
 (() => {
   'use strict';
 
-  const EXPECTED_DIAGNOSTIC_VERSION = 'multi-student-diagnostics-v2';
+  const CLIENT_DIAGNOSTICS_VERSION = 'lili-diagnostics-20261023-v4';
+  const COMPATIBLE_DIAGNOSTIC_VERSIONS = new Set(['multi-student-diagnostics-v1', 'multi-student-diagnostics-v2']);
+  const RAW_CHAT_ID = window.APP_CONFIG?.telegram?.expectedChatId;
+  const EXPECTED_CHAT_ID = Number.isSafeInteger(Number(RAW_CHAT_ID)) && Number(RAW_CHAT_ID) < 0 ? Number(RAW_CHAT_ID) : null;
   const RAW_THREAD_ID = window.APP_CONFIG?.telegram?.expectedTopicId;
   const EXPECTED_THREAD_ID = Number.isInteger(Number(RAW_THREAD_ID)) && RAW_THREAD_ID !== null && RAW_THREAD_ID !== undefined && RAW_THREAD_ID !== '' ? Number(RAW_THREAD_ID) : null;
-  const TELEGRAM_READY = window.APP_CONFIG?.features?.telegramNotifications === true && EXPECTED_THREAD_ID !== null;
+  const TELEGRAM_READY = window.APP_CONFIG?.features?.telegramNotifications === true && EXPECTED_CHAT_ID !== null;
   const config = window.APP_CONFIG || {};
   const student = config.student || {};
   const studentId = String(student.id || '').trim().toLowerCase();
@@ -14,12 +17,15 @@
   const configInfoEl = document.getElementById('config-info');
   const telegramInfoEl = document.getElementById('telegram-info');
   const dbWriteResultEl = document.getElementById('db-write-result');
+  const progressResultEl = document.getElementById('progress-result');
   const sendResultEl = document.getElementById('send-result');
   const runAllBtn = document.getElementById('run-all');
   const dbWriteBtn = document.getElementById('test-db-write');
+  const progressBtn = document.getElementById('test-progress');
   const sendBtn = document.getElementById('send-test-report');
+  let runningProgress = false;
   let supabaseClient = null;
-  let lastReport = { startedAt: null, checks: [], health: null, directRows: [], errors: [] };
+  let lastReport = { clientDiagnosticsVersion: CLIENT_DIAGNOSTICS_VERSION, startedAt: null, checks: [], health: null, directRows: [], errors: [] };
 
   const esc = (value) => String(value ?? '')
     .replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
@@ -37,7 +43,8 @@
     addKV(configInfoEl, 'Anon key', config.supabase?.anonKey ? 'есть' : 'НЕТ');
     addKV(configInfoEl, 'cloudSync', String(config.features?.cloudSync !== false));
     addKV(configInfoEl, 'telegramNotifications', String(config.features?.telegramNotifications !== false));
-    addKV(configInfoEl, 'Ожидаемая Telegram-тема', EXPECTED_THREAD_ID === null ? 'не настроена' : String(EXPECTED_THREAD_ID), true);
+    addKV(configInfoEl, 'Целевая группа Telegram', EXPECTED_CHAT_ID === null ? 'не настроена' : String(EXPECTED_CHAT_ID), true);
+    addKV(configInfoEl, 'Тема Telegram', EXPECTED_THREAD_ID === null ? 'не указана (сообщение в группу)' : String(EXPECTED_THREAD_ID), true);
     addKV(configInfoEl, 'Origin', window.location.origin, true);
   }
 
@@ -45,7 +52,7 @@
 
   function resetChecks() {
     checksEl.innerHTML = '';
-    lastReport = { startedAt: new Date().toISOString(), checks: [], health: null, directRows: [], errors: [] };
+    lastReport = { clientDiagnosticsVersion: CLIENT_DIAGNOSTICS_VERSION, startedAt: new Date().toISOString(), checks: [], health: null, directRows: [], errors: [] };
   }
 
   function addCheck(name, status, detail) {
@@ -150,7 +157,7 @@
       }
 
       if (!TELEGRAM_READY) {
-        addCheck('4. Telegram / Edge Function', 'warn', 'Уведомления отключены до настройки получателя Элины. Проверка Telegram пропущена.');
+        addCheck('4. Telegram / Edge Function', 'warn', 'Уведомления Лили отключены или не указана целевая группа. Проверка Telegram пропущена.');
         setSummary(readResponse.error ? 'bad' : 'warn', readResponse.error ? 'Ошибка подключения к Supabase.' : 'Основные настройки считаны. Telegram ещё не настроен, а облачную запись нужно проверить после публикации сайта.');
         return;
       }
@@ -162,15 +169,15 @@
         edgeResult = { ok: false, status: 0, data: { error: error.message || String(error) } };
       }
 
-      if (!edgeResult.ok || edgeResult.data?.diagnosticVersion !== EXPECTED_DIAGNOSTIC_VERSION) {
+      if (!edgeResult.ok || !COMPATIBLE_DIAGNOSTIC_VERSIONS.has(edgeResult.data?.diagnosticVersion)) {
         const detail = edgeResult.ok
-          ? `Функция отвечает, но версия диагностики другая: ${edgeResult.data?.diagnosticVersion || 'не указана'}. Нужен повторный deploy.`
+          ? `Функция отвечает, но версия диагностики несовместима: ${edgeResult.data?.diagnosticVersion || 'не указана'}. Нужна актуализация обработчика.`
           : explainFunctionFailure(edgeResult);
         addCheck('4. Supabase Edge Function notify-telegram', 'bad', detail);
         lastReport.errors.push({ stage: 'edge_function', error: detail, response: edgeResult });
       } else {
         lastReport.health = edgeResult.data;
-        addCheck('4. Supabase Edge Function notify-telegram', 'ok', `Задеплоена нужная версия: ${edgeResult.data.diagnosticVersion}.`);
+        addCheck('4. Supabase Edge Function notify-telegram', 'ok', `Совместимая установленная версия: ${edgeResult.data.diagnosticVersion}.`);
 
         const h = edgeResult.data;
         const browserRows = Array.isArray(lastReport.directRows) ? lastReport.directRows.filter((row) => !String(row.lesson_id || '').startsWith('__diagnostic_probe__')).length : 0;
@@ -187,8 +194,16 @@
         addCheck('6. Edge Function → Supabase (service role)', h.database?.ok ? 'ok' : 'bad', h.database?.ok ? `Сервер читает Supabase. Строк ДЗ: ${h.database.homeworkRows}.` : (h.database?.error || 'Сервер не может читать Supabase.'));
         addCheck('7. Получатель Telegram', h.recipient?.ok ? 'ok' : 'bad', h.recipient?.ok ? `Получатель найден и включён (${h.recipient.source || 'server'}).` : (h.recipient?.error || 'Получатель не найден/выключен.'));
 
-        const threadOk = h.recipient?.ok && Number(h.recipient?.threadId) === EXPECTED_THREAD_ID;
-        addCheck('8. Тема Telegram', threadOk ? 'ok' : 'bad', h.recipient?.ok ? `message_thread_id=${h.recipient?.threadId ?? 'NULL'}; ожидается ${EXPECTED_THREAD_ID}.` : 'Нельзя проверить тему без настроенного получателя.');
+        const recipientIsDatabase = h.recipient?.ok && h.recipient?.source === 'database';
+        const threadMatches = EXPECTED_THREAD_ID === null
+          ? (h.recipient?.threadId === null || h.recipient?.threadId === undefined)
+          : Number(h.recipient?.threadId) === EXPECTED_THREAD_ID;
+        const destinationOk = recipientIsDatabase && threadMatches && h.telegram?.chat?.ok;
+        addCheck('8. Маршрут Telegram', destinationOk ? 'ok' : 'bad',
+          !recipientIsDatabase ? 'Нет отдельного получателя Лили в базе: возможно использование запасной группы.'
+          : !threadMatches ? `Сервер использует тему ${h.recipient?.threadId ?? 'NULL'}, ожидается ${EXPECTED_THREAD_ID ?? 'NULL'}.`
+          : h.telegram?.chat?.ok ? 'Получатель взят из базы, бот видит чат. Точный chat_id проверяется в таблице telegram_recipients.'
+          : 'Получатель взят из базы, но бот не имеет доступа к целевой группе.');
         addCheck('9. Telegram Bot API / бот', h.telegram?.bot?.ok ? 'ok' : 'bad', h.telegram?.bot?.ok ? `Telegram видит бота @${h.telegram.bot.username || 'без username'}.` : (h.telegram?.bot?.error || 'getMe завершился ошибкой.'));
         addCheck('10. Telegram Bot API / группа', h.telegram?.chat?.ok ? 'ok' : 'bad', h.telegram?.chat?.ok ? `Бот имеет доступ к целевому чату (${h.telegram.chat.type || 'chat'}).` : (h.telegram?.chat?.error || 'Бот не имеет доступа к целевому чату.'));
 
@@ -216,6 +231,7 @@
         telegramInfoEl.innerHTML = '';
         addKV(telegramInfoEl, 'Edge version', h.diagnosticVersion || '—', true);
         addKV(telegramInfoEl, 'Recipient', h.recipient?.ok ? 'найден' : 'ошибка');
+        addKV(telegramInfoEl, 'Ожидаемая группа', EXPECTED_CHAT_ID ?? '—', true);
         addKV(telegramInfoEl, 'Source', h.recipient?.source || '—', true);
         addKV(telegramInfoEl, 'Enabled', String(Boolean(h.recipient?.enabled)));
         addKV(telegramInfoEl, 'message_thread_id', h.recipient?.threadId ?? 'NULL', true);
@@ -230,7 +246,7 @@
       } else if (warn.length) {
         setSummary('warn', 'Основные подключения работают, но есть предупреждение по сохранённым данным или логам.');
       } else {
-        setSummary('ok', 'Все проверенные подключения работают. Теперь можно отдельно проверить запись Supabase и отправку тестового Telegram-сообщения.');
+        setSummary('ok', 'Подключения проверены. Ниже автоматически проверяется сохранение прогресса; отправка Telegram проверяется отдельно.');
       }
     } catch (error) {
       const detail = formatError(error);
@@ -304,6 +320,159 @@
     }
   }
 
+
+  // A test uses unique, clearly non-production IDs and does not use app.js/localStorage.
+  // Comparing reads from a *new* client confirms a round trip to the database.
+  function createFreshClient() {
+    if (!window.supabase?.createClient) throw new Error('Supabase JS SDK не загрузился');
+    const url = String(config.supabase?.url || '').trim();
+    const anonKey = String(config.supabase?.anonKey || '').trim();
+    if (!url || !anonKey || studentId !== 'lili') throw new Error('Проверь student_id=lili и конфигурацию Supabase');
+    return window.supabase.createClient(url, anonKey, {
+      auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false }
+    });
+  }
+
+  function probeToken() {
+    // No normal lesson/topic/word ID can collide with this prefix.
+    const suffix = typeof crypto !== 'undefined' && crypto.randomUUID
+      ? crypto.randomUUID().replaceAll('-', '')
+      : `${Date.now()}${Math.random().toString(36).slice(2)}`;
+    return `__diagnostic_probe__lili_${suffix}`;
+  }
+
+  async function requireData(result, stage) {
+    if (result.error) throw new Error(`${stage}: ${formatError(result.error)}`);
+    return result.data;
+  }
+
+  function assertMatch(row, expected, stage) {
+    if (!row) throw new Error(`${stage}: запись не найдена после сетевого чтения`);
+    for (const [key, value] of Object.entries(expected)) {
+      if (JSON.stringify(row[key]) !== JSON.stringify(value)) {
+        throw new Error(`${stage}: ${key} отличается; ожидалось ${JSON.stringify(value)}, получено ${JSON.stringify(row[key])}`);
+      }
+    }
+  }
+
+  async function runPersistenceProbe(spec) {
+    const writer = getClient();
+    const reader = createFreshClient();
+    const token = probeToken();
+    const identity = { student_id: studentId, [spec.idColumn]: token };
+    const filter = (query) => query.eq('student_id', studentId).eq(spec.idColumn, token);
+    const keys = Object.keys({ ...spec.initial, ...spec.updated });
+    const columns = [spec.idColumn, ...keys].join(',');
+    const result = { table: spec.table, stages: [], cleaned: false };
+    let failure = null;
+
+    try {
+      await requireData(await writer.from(spec.table).upsert({ ...identity, ...spec.initial }, { onConflict: `student_id,${spec.idColumn}` }), 'create/upsert');
+      result.stages.push('create/upsert');
+
+      let row = await requireData(await filter(reader.from(spec.table).select(columns)).maybeSingle(), 'read-after-create');
+      assertMatch(row, spec.initial, 'read-after-create');
+      result.stages.push('read-after-create/new-client');
+
+      // Match the exact upsert strategy used in app.js when syncing progress.
+      await requireData(await writer.from(spec.table).upsert({ ...identity, ...spec.initial, ...spec.updated }, { onConflict: `student_id,${spec.idColumn}` }), 'update/upsert');
+      result.stages.push('update/upsert');
+
+      row = await requireData(await filter(reader.from(spec.table).select(columns)).maybeSingle(), 'read-after-update');
+      assertMatch(row, spec.updated, 'read-after-update');
+      result.stages.push('read-after-update/new-client');
+    } catch (error) {
+      failure = error;
+    } finally {
+      // Always attempt cleanup; even if a validation step failed.
+      try {
+        await requireData(await filter(writer.from(spec.table).delete()), 'cleanup/delete');
+        const left = await requireData(await filter(reader.from(spec.table).select(spec.idColumn)), 'cleanup/verify');
+        if (left.length) throw new Error('cleanup/verify: служебная запись осталась в базе');
+        result.cleaned = true;
+        result.stages.push('cleanup/verified');
+      } catch (cleanupError) {
+        const part = `Не удалось полностью удалить временную запись (${spec.table}, ${token}): ${formatError(cleanupError)}`;
+        failure = new Error(failure ? `${formatError(failure)}; ${part}` : part);
+      }
+    }
+
+    if (failure) throw Object.assign(new Error(formatError(failure)), { probe: result });
+    return result;
+  }
+
+  async function testProgressPersistence({ fromRunAll = false } = {}) {
+    if (runningProgress) return;
+    runningProgress = true;
+    progressBtn.disabled = true;
+    runAllBtn.disabled = true;
+    progressResultEl.innerHTML = '<div class="summary">Проверяю сохранение прогресса во всех четырёх таблицах…</div>';
+    const tables = config.supabase?.tables || {};
+    const now = new Date().toISOString();
+    const specs = [
+      {
+        label: 'Homework · черновик ответов', name: 'homework',
+        table: tables.homework || 'homework_progress', idColumn: 'lesson_id',
+        initial: { status: 'draft', lesson_title: 'Temporary diagnostics (not an assignment)', answers: { diagnostic: 'draft-v1' }, score_correct: null, score_total: null, score_percent: null },
+        updated: { answers: { diagnostic: 'draft-v2', checked: true }, score_correct: 1, score_total: 2, score_percent: 50 }
+      },
+      {
+        label: 'Vocabulary · изученные слова', name: 'vocabularyWords',
+        table: tables.vocabulary || 'vocabulary_progress', idColumn: 'word_key',
+        initial: { word_id: 'diagnostic-only', en: 'Temporary diagnostic', ru: 'Временная проверка', status: 'difficult' },
+        updated: { status: 'known', learned_at: now }
+      },
+      {
+        label: 'Vocabulary · результаты тестов', name: 'vocabularyTests',
+        table: tables.vocabularyTopics || 'vocabulary_topic_progress', idColumn: 'topic_id',
+        initial: { tests: [] },
+        updated: { tests: [{ id: 'diagnostics-only', score: 1, total: 1 }] }
+      },
+      {
+        label: 'Grammar · попытки и результаты', name: 'grammar',
+        table: tables.grammar || 'grammar_progress', idColumn: 'topic_id',
+        initial: { passed: false, attempts: 1, best_score: 30, answers: { diagnostic: 'before' } },
+        updated: { passed: true, attempts: 2, best_score: 100, answers: { diagnostic: 'after' } }
+      }
+    ];
+    const out = { startedAt: new Date().toISOString(), studentId, categories: {}, finishedAt: null };
+    progressResultEl.innerHTML = '';
+    try {
+      for (const spec of specs) {
+        const started = Date.now();
+        try {
+          const detail = await runPersistenceProbe(spec);
+          out.categories[spec.name] = { ok: true, table: detail.table, stages: detail.stages, cleaned: detail.cleaned };
+          progressResultEl.insertAdjacentHTML('beforeend', `<div class="check ok"><div class="ico">✓</div><div><div class="name">${esc(spec.label)}</div><div class="detail">Создание, чтение, обновление, повторное чтение и удаление прошли успешно (${Date.now() - started} мс).</div></div></div>`);
+        } catch (error) {
+          const message = formatError(error);
+          out.categories[spec.name] = { ok: false, table: spec.table, error: message, stages: error.probe?.stages || [], cleaned: error.probe?.cleaned ?? null };
+          lastReport.errors.push({ stage: `progress_${spec.name}`, error: message });
+          progressResultEl.insertAdjacentHTML('beforeend', `<div class="check bad"><div class="ico">!</div><div><div class="name">${esc(spec.label)}</div><div class="detail">${esc(message)}</div></div></div>`);
+        }
+      }
+      out.ok = Object.values(out.categories).every((item) => item.ok);
+      const statuses = Object.entries(out.categories).map(([k, v]) => `${k}:${v.ok ? 'ok' : 'bad'}`).join(', ');
+      progressResultEl.insertAdjacentHTML('beforeend', `<div class="summary ${out.ok ? 'ok' : 'bad'}">${out.ok ? '✓ Все четыре проверки сохранения прошли успешно. Временные записи удалены.' : 'Есть ошибки записи или удаления. Подробности выше и в отчёте.'}</div>`);
+      if (fromRunAll) {
+        addCheck('Сохранение Homework / Vocabulary / Grammar', out.ok ? 'ok' : 'bad', statuses);
+        const anyBad = lastReport.checks.some((item) => item.status === 'bad');
+        const anyWarn = lastReport.checks.some((item) => item.status === 'warn');
+        if (anyBad) setSummary('bad', 'Есть неисправности: смотри красные результаты и технический отчёт ниже.');
+        else if (anyWarn) setSummary('warn', 'Сохранение прогресса работает; есть предупреждения в проверке подключений.');
+        else setSummary('ok', 'Подключения и сохранение Homework, Vocabulary, Grammar работают. Telegram-отправка проверяется отдельно.');
+      }
+    } finally {
+      out.finishedAt = new Date().toISOString();
+      lastReport.progressPersistence = out;
+      lastReport.finishedAt = new Date().toISOString();
+      rawEl.textContent = JSON.stringify(lastReport, null, 2);
+      progressBtn.disabled = false;
+      runAllBtn.disabled = false;
+      runningProgress = false;
+    }
+  }
+
   async function sendTestReport() {
     if (!TELEGRAM_READY) return;
     sendBtn.disabled = true;
@@ -345,7 +514,8 @@
     }
   }
 
-  document.getElementById('run-all').addEventListener('click', runAll);
+  document.getElementById('run-all').addEventListener('click', async () => { await runAll(); await testProgressPersistence({ fromRunAll: true }); });
+  document.getElementById('test-progress').addEventListener('click', () => testProgressPersistence());
   document.getElementById('test-db-write').addEventListener('click', testDatabaseWrite);
   document.getElementById('send-test-report').addEventListener('click', sendTestReport);
   document.getElementById('copy-report').addEventListener('click', copyReport);

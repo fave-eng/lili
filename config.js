@@ -9,7 +9,8 @@ window.APP_CONFIG = {
   },
 
   telegram: {
-    expectedTopicId: 5
+    expectedChatId: -1003974197904,
+    expectedTopicId: null
   },
 
   supabase: {

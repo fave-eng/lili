@@ -20,18 +20,18 @@
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="config.js" defer></script>
-  <script src="diagnostics.js?v=20260814-1" defer></script>
+  <script src="diagnostics.js?v=20261023-lili-progress-v4" defer></script>
 </head>
 <body>
   <main class="wrap">
     <section class="hero">
-      <span class="badge">Служебная страница · не влияет на прогресс</span>
+      <span class="badge">Диагностика v4 · 23.10.2026 · тестовые данные удаляются</span>
       <h1>Диагностика подключений</h1>
-      <p>Проверяет цепочку браузер → Supabase → Edge Function → Telegram для пространства Элины. Здесь нет тестовых домашних работ; технические записи создаются только на время отдельной проверки и удаляются после неё.</p>
+      <p>Проверяет подключения и сохранение прогресса Лили в Supabase. Для проверки записи используются только временные служебные идентификаторы; настоящие задания, слова и грамматические темы не меняются.</p>
     </section>
 
     <div class="toolbar">
-      <button class="btn" id="run-all">Проверить всё</button>
+      <button class="btn" id="run-all">Проверить всё: подключения и прогресс</button>
       <button class="btn secondary" id="copy-report">Скопировать отчёт</button>
       <button class="btn secondary" id="reload-page">Перезагрузить страницу</button>
     </div>
@@ -41,7 +41,7 @@
         <h2>Состояние подключения</h2>
         <p class="sub">Проверки выполняются последовательно. Первая красная строка обычно показывает место поломки.</p>
         <div id="checks"></div>
-        <div id="main-summary" class="summary">Нажми «Проверить всё».</div>
+        <div id="main-summary" class="summary">Нажми «Проверить всё», чтобы проверить подключения и все 4 вида сохранения прогресса.</div>
       </article>
 
       <article class="card">
@@ -59,14 +59,22 @@
 
       <article class="card wide">
         <h2>Тест записи Supabase</h2>
-        <p class="sub">Создаёт временную техническую запись, проверяет путь browser/RLS → checked → submitted → cleanup и затем удаляет тестовую строку. Настоящие домашние работы не изменяются.</p>
+        <p class="sub">Дополнительная проверка серверных переходов draft → submitted_pending_report → submitted → cleanup. Основной тест сохранения черновика есть в блоке ниже. Настоящие ДЗ не изменяются.</p>
         <button class="btn dark" id="test-db-write">Проверить запись homework_progress</button>
         <div id="db-write-result" class="test-result"></div>
       </article>
 
       <article class="card wide">
+        <h2>Сохранение прогресса: Homework, Vocabulary, Grammar</h2>
+        <p class="sub">Каждая проверка реально создаёт временную запись через браузер, считывает её новым подключением, обновляет, перечитывает и удаляет. Проверяются четыре таблицы: Homework, слова Vocabulary, тесты Vocabulary, Grammar.</p>
+        <button class="btn dark" id="test-progress">Проверить сохранение всех разделов</button>
+        <div id="progress-result" class="test-result" aria-live="polite"><div class="note">Эти тесты запускаются автоматически и по кнопке «Проверить всё». Telegram-сообщения не отправляются.</div></div>
+        <div class="note" style="margin-top:12px">Это проверка облачной базы и прав доступа с сайта, а не тест конкретного упражнения. Когда появится первое настоящее ДЗ, можно отдельно проверить его ответы и восстановление после обновления страницы.</div>
+      </article>
+
+      <article class="card wide">
         <h2>Тестовый Telegram-отчёт</h2>
-        <p class="sub">Отправляет одно пробное сообщение в тему 5 чата -1003974197904. Реальные домашние задания не изменяются. Сначала нажми «Проверить всё».</p>
+        <p class="sub">Отправляет одно пробное сообщение в группу -1003974197904. Отдельная тема не указана. Реальные домашние задания не изменяются. Сначала нажми «Проверить всё».</p>
         <button class="btn dark" id="send-test-report">Отправить тестовый отчёт в Telegram</button>
         <div id="send-result" class="test-result"></div>
       </article>
