@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const CLIENT_DIAGNOSTICS_VERSION = 'lili-diagnostics-20261023-v4';
+  const CLIENT_DIAGNOSTICS_VERSION = 'lili-diagnostics-20261023-v5';
   const COMPATIBLE_DIAGNOSTIC_VERSIONS = new Set(['multi-student-diagnostics-v1', 'multi-student-diagnostics-v2']);
   const RAW_CHAT_ID = window.APP_CONFIG?.telegram?.expectedChatId;
   const EXPECTED_CHAT_ID = Number.isSafeInteger(Number(RAW_CHAT_ID)) && Number(RAW_CHAT_ID) < 0 ? Number(RAW_CHAT_ID) : null;
@@ -346,10 +346,36 @@
     return result.data;
   }
 
+  // Postgres jsonb may reorder object keys. JSON object equality is semantic;
+  // array order, however, remains meaningful (e.g. vocabulary test history).
+  // Postgres timestamptz may also serialize the same UTC instant with +00:00
+  // instead of Z. Compare parsed instants for timestamp columns only.
+  function equalStoredValue(actual, expected, fieldName = '') {
+    if (fieldName.endsWith('_at') && typeof actual === 'string' && typeof expected === 'string') {
+      const actualTime = Date.parse(actual);
+      const expectedTime = Date.parse(expected);
+      if (Number.isFinite(actualTime) && Number.isFinite(expectedTime)) {
+        return actualTime === expectedTime;
+      }
+    }
+    if (Array.isArray(expected)) {
+      return Array.isArray(actual) && actual.length === expected.length
+        && expected.every((item, index) => equalStoredValue(actual[index], item));
+    }
+    if (expected !== null && typeof expected === 'object') {
+      if (actual === null || typeof actual !== 'object' || Array.isArray(actual)) return false;
+      const expectedKeys = Object.keys(expected);
+      const actualKeys = Object.keys(actual);
+      return expectedKeys.length === actualKeys.length
+        && expectedKeys.every((key) => Object.hasOwn(actual, key) && equalStoredValue(actual[key], expected[key], key));
+    }
+    return Object.is(actual, expected);
+  }
+
   function assertMatch(row, expected, stage) {
     if (!row) throw new Error(`${stage}: запись не найдена после сетевого чтения`);
     for (const [key, value] of Object.entries(expected)) {
-      if (JSON.stringify(row[key]) !== JSON.stringify(value)) {
+      if (!equalStoredValue(row[key], value, key)) {
         throw new Error(`${stage}: ${key} отличается; ожидалось ${JSON.stringify(value)}, получено ${JSON.stringify(row[key])}`);
       }
     }
