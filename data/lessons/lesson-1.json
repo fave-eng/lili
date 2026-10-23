@@ -11,7 +11,7 @@
   "publishedAt": "2026-10-23",
   "totalPoints": 46,
   "notification": {
-    "enabled": false,
+    "enabled": true,
     "version": 1
   },
   "blocks": [
