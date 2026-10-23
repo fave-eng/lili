@@ -21,15 +21,31 @@ jobs:
           node --input-type=module - <<'NODE'
           import fs from 'node:fs';
           import vm from 'node:vm';
+
           const sandbox = { window: {} };
           vm.createContext(sandbox);
           vm.runInContext(fs.readFileSync('config.js', 'utf8'), sandbox);
           const cfg = sandbox.window.APP_CONFIG;
-          const studentId = cfg.student?.id;
-          const expectedTopic = Number(cfg.telegram?.expectedTopicId);
-          if (studentId !== 'lili' || expectedTopic !== 5 || cfg.features?.telegramNotifications !== true) {
-            throw new Error('Unexpected student ID, Telegram topic or disabled notifications');
+          const studentId = cfg?.student?.id;
+          const expectedChatId = String(cfg?.telegram?.expectedChatId ?? '');
+          const rawTopicId = cfg?.telegram?.expectedTopicId;
+          const expectedTopicId = rawTopicId === null || rawTopicId === undefined || rawTopicId === ''
+            ? null : Number(rawTopicId);
+
+          if (studentId !== 'lili') throw new Error('config.js: student.id must be lili');
+          if (expectedChatId !== '-1003974197904') {
+            throw new Error('config.js: unexpected Telegram group chat ID');
           }
+          if (expectedTopicId !== null && (!Number.isSafeInteger(expectedTopicId) || expectedTopicId <= 0)) {
+            throw new Error('config.js: Telegram topic ID must be a positive integer or null');
+          }
+          if (cfg?.features?.telegramNotifications !== true) {
+            throw new Error('Telegram notifications are disabled in config.js');
+          }
+          if (!cfg?.supabase?.url || !cfg?.supabase?.anonKey) {
+            throw new Error('Supabase URL or publishable/anon key is missing');
+          }
+
           const url = `${cfg.supabase.url.replace(/\/+$/, '')}/functions/v1/notify-telegram`;
           const response = await fetch(url, {
             method: 'POST',
@@ -41,12 +57,34 @@ jobs:
             body: JSON.stringify({ kind: 'diagnostics_health', studentId }),
           });
           const data = await response.json();
-          if (!response.ok || !data.ok) throw new Error(`Health check failed: ${JSON.stringify(data)}`);
-          if (data.diagnosticVersion !== 'multi-student-diagnostics-v2') throw new Error('Unexpected Edge Function diagnostics version');
-          if (data.recipient?.source !== 'database' || Number(data.recipient?.threadId) !== expectedTopic) {
-            throw new Error(`Wrong Telegram recipient or topic: ${JSON.stringify(data.recipient)}`);
+          if (!response.ok || !data.ok) {
+            throw new Error(`Health check failed: ${JSON.stringify(data)}`);
           }
-          if (!data.telegram?.bot?.ok || !data.telegram?.chat?.ok) throw new Error('Bot/group access failed');
-          console.log(`OK: ${studentId} has an active recipient in topic ${expectedTopic}; bot and chat are accessible.`);
-          console.log('This workflow does not send a Telegram message. Use diagnostics.html to test actual delivery.');
+
+          const compatibleVersions = new Set([
+            'multi-student-diagnostics-v1',
+            'multi-student-diagnostics-v2',
+          ]);
+          if (!compatibleVersions.has(data.diagnosticVersion)) {
+            throw new Error(`Incompatible diagnostics version: ${String(data.diagnosticVersion)}`);
+          }
+          if (data.recipient?.ok !== true || data.recipient?.enabled !== true || data.recipient?.source !== 'database') {
+            throw new Error(`No active database recipient for ${studentId}: ${JSON.stringify(data.recipient)}`);
+          }
+
+          const actualTopicId = data.recipient.threadId === null || data.recipient.threadId === undefined
+            ? null : Number(data.recipient.threadId);
+          if (actualTopicId !== expectedTopicId) {
+            throw new Error(`Telegram topic mismatch: expected ${String(expectedTopicId)}, received ${String(actualTopicId)}`);
+          }
+          if (data.telegram?.bot?.ok !== true || data.telegram?.chat?.ok !== true) {
+            throw new Error('Telegram bot or target group is inaccessible');
+          }
+
+          console.log(`OK: ${studentId}; recipient from database; diagnostics ${data.diagnosticVersion}.`);
+          console.log(expectedTopicId === null
+            ? 'Telegram destination: group without a separate topic.'
+            : `Telegram destination: group topic ${expectedTopicId}.`);
+          console.log('Bot and group access confirmed. No Telegram message was sent.');
+          console.log('The health endpoint does not expose the recipient chat ID; exact database chat ID is not independently verified here.');
           NODE
