@@ -3836,3 +3836,35 @@ label.odd-option {
   .lesson-worked-done { width: 100%; }
   .lesson-worked-result { overflow-wrap: anywhere; }
 }
+
+/* Unit 1B only: compact workbook choices, comfortable free-writing and reading */
+[data-task="l1b-v-1a"] .option-list.compact-options { grid-template-columns: repeat(4,minmax(0,1fr)); }
+[data-task="l1b-v-1a"] .exercise-item:not(.exercise-example) { display:block; }
+[data-task="l1b-v-1a"] .exercise-item:not(.exercise-example) .exercise-control { padding-left:43px; }
+[data-task="l1b-v-1c"] .gap-input { min-width:105px; max-width:min(100%,220px); }
+[data-task="l1b-g-2a"] .dialogue-gap-input { width:clamp(100px,20vw,185px); }
+[data-task="l1b-g-2b"] .text-field, [data-task="l1b-g-2d"] .text-field { width:100%; max-width:100%; }
+[data-task="l1b-g-2e"] textarea { width:100%; min-height:200px; resize:vertical; }
+[data-task="l1b-g-2c"] .continuous-gaps { max-width:860px; margin:0 auto; }
+[data-task="l1b-g-2c"] .continuous-gaps-paragraph { font-size:1.02rem; line-height:2.6; }
+[data-task="l1b-g-2c"] .continuous-gap-input { width:120px; }
+[data-task="l1b-g-2c"] .continuous-gap.is-medium .continuous-gap-input { width:150px; }
+@media(max-width:720px) {
+ [data-task="l1b-v-1a"] .option-list.compact-options { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ [data-task="l1b-v-1a"] .exercise-item:not(.exercise-example) .exercise-control { padding-left:0; }
+ [data-task="l1b-g-2c"] .continuous-gaps { padding:13px; }
+ [data-task="l1b-g-2c"] .continuous-gaps-paragraph { line-height:2.4; }
+}
+
+/* Homework 1B writing support: show the student's completed article and questions. */
+[data-task="l1b-g-2e"] .hw-writing-reference { margin:0 16px 16px; max-height:330px; overflow:auto; padding:15px; border:1px solid #d8e1f2; border-radius:14px; background:#f8fafc; }
+[data-task="l1b-g-2e"] .hw-writing-reference-section { margin:0 0 14px; }
+[data-task="l1b-g-2e"] .hw-writing-reference-section:last-child { margin-bottom:0; }
+[data-task="l1b-g-2e"] .hw-writing-reference-section > strong { display:block; color:var(--indigo); margin-bottom:7px; }
+[data-task="l1b-g-2e"] .hw-writing-reference-article { font-size:.94rem; line-height:1.9; }
+[data-task="l1b-g-2e"] .hw-writing-reference-article p { margin:0 0 12px; }
+[data-task="l1b-g-2e"] .hw-writing-reference ol { margin:0; padding-left:24px; }
+[data-task="l1b-g-2e"] .hw-writing-reference li { margin-bottom:5px; }
+[data-task="l1b-g-2e"] .hw-writing-your-answer { color:var(--indigo); border-bottom:1px solid #a5b4fc; }
+[data-task="l1b-g-2e"] textarea:disabled { cursor:not-allowed; opacity:.55; }
+@media(max-width:700px){ [data-task="l1b-g-2e"] .hw-writing-reference{ margin:0 10px 12px; max-height:280px; padding:12px;} }

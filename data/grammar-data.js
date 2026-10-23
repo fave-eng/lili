@@ -746,5 +746,634 @@ window.GRAMMAR_DATA = [
         ]
       }
     ]
+  },
+  {
+    "id": "grammar-present-simple-1b",
+    "order": 2,
+    "title": "Present Simple · statements, negatives and questions",
+    "level": "A2.1",
+    "status": "available",
+    "page": "grammar-topic.html?id=grammar-present-simple-1b",
+    "lockOnPass": true,
+    "revealAnswersOnError": false,
+    "studyGuide": {
+      "eyebrow": "English File A2 · Unit 1B",
+      "intro": "Present Simple для привычек и фактов: утверждения, отрицания, вопросы, наречия частотности, окончания -s/-es и их произношение.",
+      "promise": "После объяснения 4 разных упражнения по 4 задания. Тема засчитывается только при 16/16.",
+      "sections": [
+        {
+          "id": "ef-1b-gram-1",
+          "number": "01",
+          "kicker": "Значение",
+          "title": "Когда нужен Present Simple",
+          "intro": "Present Simple используют для привычек, распорядка, фактов, регулярных действий и устойчивых состояний — не только для того, что происходит прямо сейчас.",
+          "blocks": [
+            {
+              "type": "table",
+              "title": "Подсказки контекста",
+              "headers": [
+                "Когда",
+                "Пример",
+                "Перевод"
+              ],
+              "rows": [
+                [
+                  "Привычка",
+                  "I go out at weekends.",
+                  "Я хожу куда-нибудь по выходным."
+                ],
+                [
+                  "Факт / работа",
+                  "Jamie works as a vet.",
+                  "Джейми работает ветеринаром."
+                ],
+                [
+                  "Постоянное отношение",
+                  "She likes music.",
+                  "Ей нравится музыка."
+                ],
+                [
+                  "Регулярное действие",
+                  "They play tennis on Saturdays.",
+                  "Они играют в теннис по субботам."
+                ]
+              ]
+            },
+            {
+              "type": "contrast",
+              "title": "Сейчас ≠ обычно",
+              "left": {
+                "label": "Present Simple",
+                "pattern": "I work every day.",
+                "meaning": "Обычное действие, повторяющееся в жизни.",
+                "examples": [
+                  "She lives in a flat.",
+                  "We often meet our friends."
+                ]
+              },
+              "right": {
+                "label": "Present Continuous",
+                "pattern": "I am working now.",
+                "meaning": "Действие в данный момент. Контраст для понимания; отдельную тему изучим позже.",
+                "examples": [
+                  "She is studying right now."
+                ]
+              }
+            },
+            {
+              "type": "note",
+              "title": "Что важно",
+              "text": "Слова always / usually / often / sometimes / never часто встречаются с Present Simple, но одно наречие не определяет время автоматически.",
+              "tone": "remember"
+            }
+          ]
+        },
+        {
+          "id": "ef-1b-gram-2",
+          "number": "02",
+          "kicker": "Образование",
+          "title": "Утверждение: I work / she works",
+          "intro": "В Present Simple две модели: I / you / we / they + начальная форма глагола и he / she / it + глагол с -s или -es.",
+          "blocks": [
+            {
+              "type": "table",
+              "title": "Положительная форма",
+              "headers": [
+                "Подлежащее",
+                "Формула",
+                "Пример"
+              ],
+              "rows": [
+                [
+                  "I / you / we / they",
+                  "subject + verb",
+                  "They live together. — Они живут вместе."
+                ],
+                [
+                  "he / she / it",
+                  "subject + verb-s/-es",
+                  "He watches TV. — Он смотрит телевизор."
+                ]
+              ]
+            },
+            {
+              "type": "table",
+              "title": "Правописание he/she/it",
+              "headers": [
+                "Случай",
+                "Изменение",
+                "Пример"
+              ],
+              "rows": [
+                [
+                  "Обычно",
+                  "+ s",
+                  "live → lives, like → likes"
+                ],
+                [
+                  "-ch, -sh, -ss, -x, -o",
+                  "+ es",
+                  "watch → watches, go → goes"
+                ],
+                [
+                  "Согласная + y",
+                  "y → ies",
+                  "study → studies"
+                ],
+                [
+                  "Гласная + y",
+                  "+ s",
+                  "play → plays"
+                ],
+                [
+                  "Нерегулярно",
+                  "have → has",
+                  "She has a brother."
+                ]
+              ]
+            },
+            {
+              "type": "examples",
+              "title": "Сравнение",
+              "rows": [
+                {
+                  "en": "I study music. — She studies music.",
+                  "ru": "Я изучаю музыку. — Она изучает музыку."
+                },
+                {
+                  "en": "They work in a school. — He works in a school.",
+                  "ru": "Они работают в школе. — Он работает в школе."
+                }
+              ]
+            },
+            {
+              "type": "note",
+              "title": "Не добавляй -s дважды",
+              "text": "He watches TV. — правильно. He watch TV. — неверно. Does he watch TV? — после does суффикс -s исчезает.",
+              "tone": "remember"
+            }
+          ]
+        },
+        {
+          "id": "ef-1b-gram-3",
+          "number": "03",
+          "kicker": "Форма и смысл",
+          "title": "Отрицание: don’t / doesn’t",
+          "intro": "Чтобы сказать, что действие обычно не происходит, используем do not (don’t) или does not (doesn’t) + начальную форму основного глагола.",
+          "blocks": [
+            {
+              "type": "table",
+              "title": "Отрицательная форма",
+              "headers": [
+                "Кто?",
+                "Схема",
+                "Пример"
+              ],
+              "rows": [
+                [
+                  "I / you / we / they",
+                  "do not / don’t + verb",
+                  "I don’t see him often. — Я нечасто его вижу."
+                ],
+                [
+                  "he / she / it",
+                  "does not / doesn’t + verb",
+                  "She doesn’t play tennis. — Она не играет в теннис."
+                ]
+              ]
+            },
+            {
+              "type": "examples",
+              "title": "Обрати внимание",
+              "rows": [
+                {
+                  "en": "It doesn’t often rain in summer.",
+                  "ru": "Летом дождь идёт нечасто."
+                },
+                {
+                  "en": "He doesn’t like being in a group.",
+                  "ru": "Ему не нравится находиться в группе."
+                }
+              ]
+            },
+            {
+              "type": "note",
+              "title": "Типичная ошибка",
+              "text": "He doesn’t likes parties — неверно. Правильно: He doesn’t like parties. does уже обозначает 3-е лицо единственного числа.",
+              "tone": "remember"
+            }
+          ]
+        },
+        {
+          "id": "ef-1b-gram-4",
+          "number": "04",
+          "kicker": "Порядок слов",
+          "title": "Общие и специальные вопросы",
+          "intro": "У общего вопроса ответ часто Yes / No. Специальный вопрос начинается с вопросительного слова (What, Where, Who, How often).",
+          "blocks": [
+            {
+              "type": "table",
+              "title": "Вопросы с обычными глаголами",
+              "headers": [
+                "Вид",
+                "Формула",
+                "Пример"
+              ],
+              "rows": [
+                [
+                  "Общий I / you / we / they",
+                  "Do + subject + verb?",
+                  "Do you live here? — Ты живёшь здесь?"
+                ],
+                [
+                  "Общий he / she / it",
+                  "Does + subject + verb?",
+                  "Does Anna work? — Анна работает?"
+                ],
+                [
+                  "Специальный",
+                  "Question word + do/does + subject + verb?",
+                  "Where does she live? — Где она живёт?"
+                ]
+              ]
+            },
+            {
+              "type": "examples",
+              "title": "Короткие ответы",
+              "rows": [
+                {
+                  "en": "Do you work? — Yes, I do. / No, I don’t.",
+                  "ru": "Ты работаешь? — Да. / Нет."
+                },
+                {
+                  "en": "Does he live alone? — Yes, he does. / No, he doesn’t.",
+                  "ru": "Он живёт один? — Да. / Нет."
+                }
+              ]
+            },
+            {
+              "type": "note",
+              "title": "be не использует do / does",
+              "text": "Are you shy? / Is Anna shy? — правильно. Do you be shy? — неверно. Когда сказуемое — be, ставим am/is/are перед подлежащим.",
+              "tone": "remember"
+            }
+          ]
+        },
+        {
+          "id": "ef-1b-gram-5",
+          "number": "05",
+          "kicker": "Место в предложении",
+          "title": "Наречия частотности и время",
+          "intro": "always, usually, often, sometimes, hardly ever, never показывают, насколько часто что-то происходит. Их место зависит от глагола.",
+          "blocks": [
+            {
+              "type": "table",
+              "title": "Где ставить наречие?",
+              "headers": [
+                "Ситуация",
+                "Правило",
+                "Пример"
+              ],
+              "rows": [
+                [
+                  "Обычный глагол",
+                  "перед смысловым глаголом",
+                  "I usually get up early. — Я обычно рано встаю."
+                ],
+                [
+                  "be",
+                  "после am/is/are",
+                  "She is always busy. — Она всегда занята."
+                ],
+                [
+                  "don’t / doesn’t",
+                  "после отрицания, перед смысловым глаголом",
+                  "He doesn’t often go out. — Он нечасто выходит."
+                ],
+                [
+                  "every day",
+                  "часто в конце предложения",
+                  "I see him every day. — Я вижу его каждый день."
+                ]
+              ]
+            },
+            {
+              "type": "examples",
+              "title": "Сравни",
+              "rows": [
+                {
+                  "en": "She never goes out.",
+                  "ru": "Она никогда никуда не ходит."
+                },
+                {
+                  "en": "You’re never too old to get married.",
+                  "ru": "Никогда не бывает слишком поздно жениться / выйти замуж."
+                },
+                {
+                  "en": "I hardly ever see Jamie.",
+                  "ru": "Я почти никогда не вижу Джейми."
+                }
+              ]
+            },
+            {
+              "type": "note",
+              "title": "Не удваивай отрицание",
+              "text": "Never и hardly ever уже имеют отрицательное или почти отрицательное значение. I don’t never go out — не стандартная нейтральная форма.",
+              "tone": "remember"
+            }
+          ]
+        },
+        {
+          "id": "ef-1b-gram-6",
+          "number": "06",
+          "kicker": "Произношение",
+          "title": "Окончания -s и -es: произношение",
+          "intro": "Форма he/she/it произносится по-разному. Выбор /s/, /z/ или /ɪz/ зависит от последнего звука основы, не от последней буквы.",
+          "blocks": [
+            {
+              "type": "table",
+              "title": "Три произношения",
+              "headers": [
+                "Звук",
+                "После каких звуков",
+                "Примеры"
+              ],
+              "rows": [
+                [
+                  "/s/",
+                  "после глухих /p, t, k, f, θ/",
+                  "works, likes, laughs"
+                ],
+                [
+                  "/z/",
+                  "после гласных и звонких звуков",
+                  "lives, knows, runs, leaves"
+                ],
+                [
+                  "/ɪz/",
+                  "после шипящих/свистящих /s, z, ʃ, ʒ, tʃ, dʒ/",
+                  "watches, washes, dresses, teaches"
+                ]
+              ]
+            },
+            {
+              "type": "examples",
+              "title": "Различаем",
+              "rows": [
+                {
+                  "en": "She works. /s/ — He lives. /z/",
+                  "ru": "Третье лицо выглядит одинаково с -s, но звук различается."
+                },
+                {
+                  "en": "He watches TV. /ɪz/",
+                  "ru": "Добавляется отдельный слог после /tʃ/."
+                }
+              ]
+            },
+            {
+              "type": "note",
+              "title": "Как проверить себя",
+              "text": "После /s/ и /z/ не добавляй лишний слог: works — один слог, lives — один слог; watches — два слога.",
+              "tone": "remember"
+            }
+          ]
+        },
+        {
+          "id": "ef-1b-gram-7",
+          "number": "07",
+          "kicker": "Итог",
+          "title": "Как не перепутать формы",
+          "intro": "Перед ответом спроси себя: кто выполняет действие, утверждение это или вопрос, и есть ли слово о регулярности.",
+          "blocks": [
+            {
+              "type": "decision",
+              "title": "Быстрая схема",
+              "steps": [
+                {
+                  "if": "Говоришь о факте или привычке?",
+                  "then": "Present Simple.",
+                  "example": "I live in a flat."
+                },
+                {
+                  "if": "Подлежащее he / she / it и это утверждение?",
+                  "then": "Добавь к глаголу -s/-es или -ies.",
+                  "example": "She studies music."
+                },
+                {
+                  "if": "Отрицание или вопрос с обычным глаголом?",
+                  "then": "Используй do/don’t или does/doesn’t + базовую форму.",
+                  "example": "Does she like parties?"
+                },
+                {
+                  "if": "Есть наречие частотности?",
+                  "then": "Проверь его позицию: обычно перед глаголом, после be.",
+                  "example": "She is always busy."
+                }
+              ]
+            },
+            {
+              "type": "note",
+              "title": "Перед проверкой",
+              "text": "Вспомни: She doesn’t lives — неверно, потому что doesn’t + live. It is always fun — always после be. Does Anna like...? — после does форма like.",
+              "tone": "remember"
+            }
+          ]
+        }
+      ]
+    },
+    "exercises": [
+      {
+        "type": "exercise",
+        "id": "gram-1",
+        "title": "1. Choose the correct form",
+        "difficulty": "Easy",
+        "instructions": "Choose the correct answer.",
+        "hideAnswersOnError": true,
+        "items": [
+          {
+            "id": "1",
+            "number": 1,
+            "input": "single",
+            "prompt": "Jamie ___ as a vet.",
+            "options": [
+              "work",
+              "works",
+              "working"
+            ],
+            "answer": 1
+          },
+          {
+            "id": "2",
+            "number": 2,
+            "input": "single",
+            "prompt": "They ___ together.",
+            "options": [
+              "doesn’t live",
+              "don’t live",
+              "not lives"
+            ],
+            "answer": 1
+          },
+          {
+            "id": "3",
+            "number": 3,
+            "input": "single",
+            "prompt": "___ Anna live alone?",
+            "options": [
+              "Do",
+              "Does",
+              "Is"
+            ],
+            "answer": 1
+          },
+          {
+            "id": "4",
+            "number": 4,
+            "input": "single",
+            "prompt": "She ___ TV every evening.",
+            "options": [
+              "watches",
+              "watchs",
+              "watch"
+            ],
+            "answer": 0
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "id": "gram-2",
+        "title": "2. Write the missing form",
+        "difficulty": "Medium",
+        "instructions": "Complete the gaps with the correct present simple form.",
+        "hideAnswersOnError": true,
+        "items": [
+          {
+            "id": "1",
+            "number": 1,
+            "input": "gaps",
+            "segments": [
+              "She ",
+              " (study) music at university."
+            ],
+            "answers": [
+              "studies"
+            ]
+          },
+          {
+            "id": "2",
+            "number": 2,
+            "input": "gaps",
+            "segments": [
+              "He ",
+              " (not like) going to parties."
+            ],
+            "answers": [
+              "doesn't like"
+            ]
+          },
+          {
+            "id": "3",
+            "number": 3,
+            "input": "gaps",
+            "segments": [
+              "Where ",
+              " your friend live?"
+            ],
+            "answers": [
+              "does"
+            ]
+          },
+          {
+            "id": "4",
+            "number": 4,
+            "input": "gaps",
+            "segments": [
+              "We ",
+              " (have) dinner at 7.00."
+            ],
+            "answers": [
+              "have"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "id": "gram-3",
+        "title": "3. Correct the grammar",
+        "difficulty": "Challenging",
+        "instructions": "Rewrite the sentence correctly.",
+        "hideAnswersOnError": true,
+        "items": [
+          {
+            "id": "1",
+            "number": 1,
+            "input": "text",
+            "prompt": "She don’t often go out.",
+            "answer": "She doesn't often go out."
+          },
+          {
+            "id": "2",
+            "number": 2,
+            "input": "text",
+            "prompt": "Does he watches TV?",
+            "answer": "Does he watch TV?"
+          },
+          {
+            "id": "3",
+            "number": 3,
+            "input": "text",
+            "prompt": "I am never go to parties.",
+            "answer": "I never go to parties."
+          },
+          {
+            "id": "4",
+            "number": 4,
+            "input": "text",
+            "prompt": "He studys English every day.",
+            "answer": "He studies English every day."
+          }
+        ]
+      },
+      {
+        "type": "exercise",
+        "id": "gram-4",
+        "title": "4. Write complete sentences",
+        "difficulty": "Advanced",
+        "instructions": "Write the complete sentence or question from the prompts.",
+        "hideAnswersOnError": true,
+        "items": [
+          {
+            "id": "1",
+            "number": 1,
+            "input": "text",
+            "prompt": "Anna / live / alone (positive)",
+            "answer": "Anna lives alone."
+          },
+          {
+            "id": "2",
+            "number": 2,
+            "input": "text",
+            "prompt": "you / usually / see / friends / on Saturdays (question)",
+            "answer": "Do you usually see friends on Saturdays?"
+          },
+          {
+            "id": "3",
+            "number": 3,
+            "input": "text",
+            "prompt": "Jamie / not / like / parties (negative)",
+            "answer": "Jamie doesn't like parties."
+          },
+          {
+            "id": "4",
+            "number": 4,
+            "input": "text",
+            "prompt": "where / your sister / work (question)",
+            "answer": "Where does your sister work?"
+          }
+        ]
+      }
+    ]
   }
 ];

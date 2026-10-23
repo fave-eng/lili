@@ -1833,7 +1833,7 @@ function renderLessonWorkedExample(block, exampleHtml) {
       const answers = Array.isArray(item.answers) ? item.answers : [];
       const segments = Array.isArray(item.segments) ? item.segments : [];
       const gapClass = item.inputSize === 'wide' ? 'gap-input gap-input-wide' : 'gap-input';
-      control = `<div class="sentence-gaps" aria-label="${prompt}">${answers.map((answer, gapIndex) => `${gapIndex < segments.length ? `<span>${escapeHtml(segments[gapIndex])}</span>` : ''}<input class="${gapClass}" data-gap-index="${gapIndex}" aria-label="Gap ${gapIndex + 1}" autocomplete="off">`).join('')}${segments.length > answers.length ? `<span>${escapeHtml(segments[segments.length - 1])}</span>` : ''}</div>`;
+      control = `<div class="sentence-gaps" aria-label="${prompt}">${answers.map((answer, gapIndex) => `${gapIndex < segments.length ? `<span>${escapeHtml(segments[gapIndex])}</span>` : ''}<input class="${gapClass}" data-gap-index="${gapIndex}" aria-label="Gap ${gapIndex + 1}" autocomplete="off"${(item.gapPlaceholders || [])[gapIndex] ? ` placeholder="${escapeHtml(item.gapPlaceholders[gapIndex])}"` : ''}>`).join('')}${segments.length > answers.length ? `<span>${escapeHtml(segments[segments.length - 1])}</span>` : ''}</div>`;
     } else if (item.input === 'checkbox') {
       control = `<label class="task-checkbox"><input type="checkbox" id="${escapeHtml(inputId)}"><span>${prompt || escapeHtml(item.label || 'Done')}</span></label>`;
     } else {
@@ -2095,6 +2095,49 @@ function renderLessonWorkedExample(block, exampleHtml) {
     update();
   }
 
+  // Unit 1B writing references always use the student's own input, never the answer key.
+  function initializeWritingReferences(root, blocks) {
+    (Array.isArray(blocks) ? blocks : []).filter((block) =>
+      block.type === 'exercise' && Array.isArray(block.linkedReferences) && block.linkedReferences.length
+    ).forEach((block) => {
+      const target = root.querySelector(`[data-task="${CSS.escape(safeText(block.id))}"]`);
+      const panel = target?.querySelector('[data-hw-writing-reference]');
+      const writingField = target?.querySelector('textarea');
+      if (!target || !panel || !writingField) return;
+      const ids = block.linkedReferences;
+      const article = root.querySelector(`[data-task="${CSS.escape(safeText(ids[0]))}"]`);
+      const questions = root.querySelector(`[data-task="${CSS.escape(safeText(ids[1]))}"]`);
+      if (!article || !questions) return;
+      const articleInputs = [...article.querySelectorAll('[data-continuous-gap]')];
+      const questionInputs = [...questions.querySelectorAll('[data-exercise-item]:not(.exercise-example) input.text-field')];
+      const update = () => {
+        const ready = articleInputs.length > 0 && questionInputs.length > 0 &&
+          [...articleInputs, ...questionInputs].every((input) => input.value.trim().length > 0);
+        writingField.disabled = !ready;
+        if (!ready) {
+          panel.innerHTML = '<p class="hw-writing-reference-empty">Complete every gap in c and every question in d first. Your own answers will appear here.</p>';
+          return;
+        }
+        const paragraphs = [...article.querySelectorAll('.continuous-gaps-paragraph')].map((paragraph) => {
+          const clone = paragraph.cloneNode(true);
+          clone.querySelectorAll('input[data-continuous-gap]').forEach((input) => {
+            const completed = document.createElement('strong');
+            completed.className = 'hw-writing-your-answer';
+            completed.textContent = input.value;
+            input.replaceWith(completed);
+          });
+          return clone.outerHTML;
+        }).join('');
+        const questionList = questionInputs.map((input, index) => `<li>${escapeHtml(input.value)}</li>`).join('');
+        panel.innerHTML = `<div class="hw-writing-reference-section"><strong>Text c — your answers</strong><div class="hw-writing-reference-article">${paragraphs}</div></div>` +
+          `<div class="hw-writing-reference-section"><strong>Questions d — your answers</strong><ol>${questionList}</ol></div>`;
+      };
+      root.addEventListener('input', update);
+      root.addEventListener('change', update);
+      update();
+    });
+  }
+
   function renderLessonBlock(block, index) {
     const id = safeText(block.id, `task-${index}`);
     const title = escapeHtml(block.title || block.prompt || `Task ${index + 1}`);
@@ -2177,9 +2220,12 @@ function renderLessonWorkedExample(block, exampleHtml) {
         ? renderLessonWorkedExample(block, renderExerciseItem(firstExample, id, items.indexOf(firstExample), block.inlineNumberedItems === true))
         : '';
       const hasStickyImage = block.stickyImage === true && imageEntries.length === 1;
+      const linkedReference = Array.isArray(block.linkedReferences) && block.linkedReferences.length
+        ? '<div class="hw-writing-reference" data-hw-writing-reference role="region" aria-label="Your article and questions"><p>Complete exercises c and d to see your own answers here.</p></div>'
+        : '';
       const exerciseBody = hasStickyImage
-        ? `<div class="exercise-sticky-layout"><div class="exercise-sticky-media">${image}</div><div class="exercise-sticky-content">${intro}${exampleHtml}${exerciseContent}</div></div>`
-        : `${image}${intro}${exampleHtml}${exerciseContent}`;
+        ? `<div class="exercise-sticky-layout"><div class="exercise-sticky-media">${image}</div><div class="exercise-sticky-content">${intro}${exampleHtml}${linkedReference}${exerciseContent}</div></div>`
+        : `${image}${intro}${exampleHtml}${linkedReference}${exerciseContent}`;
       return `<article class="card lesson-block exercise-card${block.layout === 'dialogue' ? ' dialogue-card' : ''}${hasStickyImage ? ' has-sticky-image' : ''}" data-task="${escapeHtml(id)}" data-type="exercise">
         <div class="exercise-heading">${Object.prototype.hasOwnProperty.call(block, 'eyebrow') ? (safeText(block.eyebrow) ? `<span class="eyebrow">${escapeHtml(safeText(block.eyebrow))}</span>` : '') : '<span class="eyebrow">Exercise</span>'}<h3>${title}</h3>${block.instructions && safeText(block.title).replace(/^[a-z]\s*·\s*/i, '').trim().toLowerCase().replace(/[.!?]+$/, '') !== safeText(block.instructions).trim().toLowerCase().replace(/[.!?]+$/, '') ? `<p class="muted exercise-instructions">${escapeHtml(block.instructions)}</p>` : ''}${player}${wordBank}${wordBanks}</div>
         ${exerciseBody}
@@ -2235,6 +2281,7 @@ function renderLessonWorkedExample(block, exampleHtml) {
     const inputType = item.input || 'text';
     let actual;
     let correct = false;
+    let scoredGaps = null;
 
     if (inputType === 'example-gap') {
       actual = itemNode.querySelector('[data-example-gap]')?.value ?? '';
@@ -2275,10 +2322,12 @@ function renderLessonWorkedExample(block, exampleHtml) {
     } else if (inputType === 'gaps') {
       actual = [...itemNode.querySelectorAll('[data-gap-index]')].map((input) => input.value);
       const expected = Array.isArray(item.answers) ? item.answers : [];
-      correct = expected.length > 0 && expected.every((answer, index) => {
+      const gapMatches = expected.map((answer, index) => {
         const accepted = Array.isArray(answer) ? answer : [answer];
         return accepted.some((variant) => normalizeAnswer(variant) === normalizeAnswer(actual[index]));
       });
+      correct = expected.length > 0 && gapMatches.every(Boolean);
+      if (item.scoreEachGap === true) scoredGaps = { total: expected.length, correct: gapMatches.filter(Boolean).length };
     } else if (inputType === 'checkbox') {
       actual = itemNode.querySelector('input[type="checkbox"]')?.checked || false;
       correct = Boolean(actual);
@@ -2297,7 +2346,7 @@ function renderLessonWorkedExample(block, exampleHtml) {
       correct = textAnswerMatches(item, actual);
     }
 
-    return { actual, correct };
+    return { actual, correct, scoredGaps };
   }
 
   function checkExerciseBlock(block, node, options = {}) {
@@ -2331,8 +2380,8 @@ function renderLessonWorkedExample(block, exampleHtml) {
         return;
       }
 
-      total += 1;
-      if (result.correct) correctCount += 1;
+      total += result.scoredGaps ? result.scoredGaps.total : 1;
+      correctCount += result.scoredGaps ? result.scoredGaps.correct : (result.correct ? 1 : 0);
       if (!options.silent) {
         itemNode.classList.toggle('is-correct', result.correct);
         itemNode.classList.toggle('is-wrong', !result.correct);
@@ -2524,6 +2573,7 @@ function renderLessonWorkedExample(block, exampleHtml) {
     wireLessonInteractiveInputs(root);
     initializeLessonWordOrder(root, blocks);
     initializeLinkedLessonQuestions(root, blocks);
+    initializeWritingReferences(root, blocks);
 
     root.querySelectorAll('[data-reorder-source]').forEach((source) => {
       source.addEventListener('click', (event) => {

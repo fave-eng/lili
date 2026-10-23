@@ -148,5 +148,211 @@ window.VOCABULARY_DATA = [
         "exampleRu": "Ты хорошо провела время?"
       }
     ]
+  },
+  {
+    "id": "vocab-lesson-2",
+    "title": "1B · Describing people",
+    "label": "English File A2 · Workbook 1B",
+    "type": "lesson",
+    "linkedLessonId": "lesson-2",
+    "page": "vocabulary.html?id=vocab-lesson-2",
+    "words": [
+      {
+        "id": "ef-a2-1b-01",
+        "en": "blonde",
+        "ru": "светловолосый, блондин/блондинка",
+        "exampleEn": "She has blonde hair.",
+        "exampleRu": "У неё светлые волосы."
+      },
+      {
+        "id": "ef-a2-1b-02",
+        "en": "curly",
+        "ru": "кудрявый",
+        "exampleEn": "He has curly hair.",
+        "exampleRu": "У него кудрявые волосы."
+      },
+      {
+        "id": "ef-a2-1b-03",
+        "en": "straight",
+        "ru": "прямой (о волосах)",
+        "exampleEn": "She has straight hair.",
+        "exampleRu": "У неё прямые волосы."
+      },
+      {
+        "id": "ef-a2-1b-04",
+        "en": "bald",
+        "ru": "лысый",
+        "exampleEn": "Her dad is bald.",
+        "exampleRu": "Её отец лысый."
+      },
+      {
+        "id": "ef-a2-1b-05",
+        "en": "thin",
+        "ru": "худой",
+        "exampleEn": "He was thin when he was young.",
+        "exampleRu": "В молодости он был худым."
+      },
+      {
+        "id": "ef-a2-1b-06",
+        "en": "overweight",
+        "ru": "с лишним весом",
+        "exampleEn": "He is a bit overweight now.",
+        "exampleRu": "Сейчас у него небольшой лишний вес."
+      },
+      {
+        "id": "ef-a2-1b-07",
+        "en": "slim",
+        "ru": "стройный",
+        "exampleEn": "She is tall and slim.",
+        "exampleRu": "Она высокая и стройная."
+      },
+      {
+        "id": "ef-a2-1b-08",
+        "en": "beard",
+        "ru": "борода",
+        "exampleEn": "He has a beard.",
+        "exampleRu": "У него есть борода."
+      },
+      {
+        "id": "ef-a2-1b-09",
+        "en": "moustache",
+        "ru": "усы",
+        "exampleEn": "He has a beard and a moustache.",
+        "exampleRu": "У него есть борода и усы."
+      },
+      {
+        "id": "ef-a2-1b-10",
+        "en": "generous",
+        "ru": "щедрый",
+        "exampleEn": "That was very generous of you.",
+        "exampleRu": "Это было очень щедро с твоей стороны."
+      },
+      {
+        "id": "ef-a2-1b-11",
+        "en": "funny",
+        "ru": "забавный, с чувством юмора",
+        "exampleEn": "Sarah is funny. She makes me laugh.",
+        "exampleRu": "Сара забавная, она меня смешит."
+      },
+      {
+        "id": "ef-a2-1b-12",
+        "en": "friendly",
+        "ru": "дружелюбный",
+        "exampleEn": "Sam is friendly. Everybody likes him.",
+        "exampleRu": "Сэм дружелюбный, он всем нравится."
+      },
+      {
+        "id": "ef-a2-1b-13",
+        "en": "lazy",
+        "ru": "ленивый",
+        "exampleEn": "John is very lazy.",
+        "exampleRu": "Джон очень ленивый."
+      },
+      {
+        "id": "ef-a2-1b-14",
+        "en": "clever",
+        "ru": "умный, сообразительный",
+        "exampleEn": "She is a clever girl.",
+        "exampleRu": "Она умная девушка."
+      },
+      {
+        "id": "ef-a2-1b-15",
+        "en": "unkind",
+        "ru": "недобрый, жестокий",
+        "exampleEn": "That was an unkind thing to say.",
+        "exampleRu": "Это было недобро с твоей стороны."
+      },
+      {
+        "id": "ef-a2-1b-16",
+        "en": "stupid",
+        "ru": "глупый",
+        "exampleEn": "Sometimes he says stupid things.",
+        "exampleRu": "Иногда он говорит глупости."
+      },
+      {
+        "id": "ef-a2-1b-17",
+        "en": "shy",
+        "ru": "застенчивый",
+        "exampleEn": "He is quite shy.",
+        "exampleRu": "Он довольно застенчивый."
+      },
+      {
+        "id": "ef-a2-1b-18",
+        "en": "quiet",
+        "ru": "тихий, молчаливый",
+        "exampleEn": "She is usually very quiet.",
+        "exampleRu": "Обычно она очень молчаливая."
+      },
+      {
+        "id": "ef-a2-1b-19",
+        "en": "extrovert",
+        "ru": "экстраверт; общительный человек",
+        "exampleEn": "I am quite extrovert.",
+        "exampleRu": "Я довольно общительный человек."
+      },
+      {
+        "id": "ef-a2-1b-20",
+        "en": "hard-working",
+        "ru": "трудолюбивый",
+        "exampleEn": "My dad is really hard-working.",
+        "exampleRu": "Мой папа очень трудолюбивый."
+      },
+      {
+        "id": "ef-a2-1b-21",
+        "en": "talkative",
+        "ru": "разговорчивый",
+        "exampleEn": "She is very talkative.",
+        "exampleRu": "Она очень разговорчивая."
+      },
+      {
+        "id": "ef-a2-1b-22",
+        "en": "serious",
+        "ru": "серьёзный",
+        "exampleEn": "He is a serious student.",
+        "exampleRu": "Он серьёзно относится к учёбе."
+      },
+      {
+        "id": "ef-a2-1b-23",
+        "en": "mean",
+        "ru": "скупой, жадный",
+        "exampleEn": "Dan is mean — he never pays for anything.",
+        "exampleRu": "Дэн жадный — он никогда ни за что не платит."
+      },
+      {
+        "id": "ef-a2-1b-24",
+        "en": "get on (well) with",
+        "ru": "ладить с кем-либо",
+        "exampleEn": "We get on really well.",
+        "exampleRu": "Мы прекрасно ладим друг с другом."
+      },
+      {
+        "id": "ef-a2-1b-25",
+        "en": "hardly ever",
+        "ru": "почти никогда",
+        "exampleEn": "I hardly ever see my wife.",
+        "exampleRu": "Я почти никогда не вижу свою жену."
+      },
+      {
+        "id": "ef-a2-1b-26",
+        "en": "every day",
+        "ru": "каждый день",
+        "exampleEn": "She sees him every day.",
+        "exampleRu": "Она видится с ним каждый день."
+      },
+      {
+        "id": "ef-a2-1b-27",
+        "en": "vet",
+        "ru": "ветеринар",
+        "exampleEn": "Jamie works as a vet.",
+        "exampleRu": "Джейми работает ветеринаром."
+      },
+      {
+        "id": "ef-a2-1b-28",
+        "en": "get married",
+        "ru": "жениться, выходить замуж",
+        "exampleEn": "She wants to get married.",
+        "exampleRu": "Она хочет выйти замуж."
+      }
+    ]
   }
 ];
