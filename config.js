@@ -4,8 +4,8 @@ window.APP_CONFIG = {
     nameRu: "Лили",
     nameEn: "Lili",
     level: "A2.1",
-    textbook: "Not selected yet",
-    textbookEdition: ""
+    textbook: "English File A2",
+    textbookEdition: "4th Edition"
   },
 
   telegram: {
