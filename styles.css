@@ -3734,3 +3734,105 @@ label.odd-option {
   [data-task="v-1b"] .dialogue-gap-input { width:min(100%,130px); }
   [data-task="g-2c"] .gap-input-wide { min-width:180px; }
 }
+
+
+/* Workbook 1A: make the already completed source-book examples immediately clear. */
+.lesson-worked-example {
+  margin: 15px 16px 14px;
+  padding: 15px;
+  border: 1px solid #bccaf5;
+  border-left: 4px solid #6366f1;
+  border-radius: 15px;
+  background: #f6f8ff;
+  min-width: 0;
+}
+.lesson-worked-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px 15px;
+  margin-bottom: 11px;
+}
+.lesson-worked-label {
+  color: #3730a3;
+  font-weight: 900;
+  font-size: .75rem;
+  letter-spacing: .055em;
+}
+.lesson-worked-done {
+  color: #64748b;
+  font-size: .76rem;
+  font-weight: 650;
+}
+.lesson-worked-content { min-width: 0; }
+.lesson-worked-content > .exercise-item {
+  background: #fff;
+  border: 1px solid #dce4f7;
+  box-shadow: none;
+  padding: 12px 14px;
+  margin: 0;
+}
+.lesson-worked-content .exercise-example-label { display: none; }
+.lesson-worked-content .exercise-item-header { margin-bottom: 7px; }
+.lesson-worked-content .exercise-item-inline-content,
+.lesson-worked-content .exercise-prompt { font-size: .94rem; }
+.lesson-worked-content .exercise-control { padding-left: 43px; }
+.lesson-worked-content .example-answer {
+  background: #f8faff;
+  border: 1px solid #cbd5fb;
+  margin-left: 43px;
+}
+.lesson-worked-content .lesson-match-example select {
+  color: #3730a3;
+  font-weight: 800;
+  opacity: 1;
+  -webkit-text-fill-color: #3730a3;
+}
+.lesson-worked-why {
+  margin: 11px 0 0;
+  padding-top: 11px;
+  border-top: 1px solid #dce4fa;
+  color: #334155;
+  font-size: .86rem;
+  line-height: 1.65;
+}
+.lesson-worked-why strong { color: #3730a3; }
+.lesson-worked-result {
+  margin-top: 11px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #dce4f7;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+.lesson-worked-result-label {
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  color: #64748b;
+  text-transform: uppercase;
+}
+.lesson-worked-result strong { color: #312e81; line-height: 1.55; }
+.lesson-worked-fill {
+  color: #3730a3;
+  background: #e0e7ff;
+  padding: 1px 4px;
+  border-radius: 5px;
+  border-bottom: 2px solid #818cf8;
+}
+.dialogue-exercise > .lesson-worked-example { margin: 0 0 8px; }
+.lesson-worked-content:has(.dialogue-line) { display: grid; gap: 8px; }
+.lesson-worked-content > .dialogue-line { padding: 9px 11px; box-shadow: none; }
+.pronunciation-choice-table + .lesson-worked-example { margin-top: 0; }
+@media (max-width: 620px) {
+  .lesson-worked-example { margin: 12px 10px; padding: 12px; }
+  .lesson-worked-content .exercise-control,
+  .lesson-worked-content .example-answer { padding-left: 0; margin-left: 0; }
+  .lesson-worked-content > .exercise-item { padding: 10px; }
+  .lesson-worked-done { width: 100%; }
+  .lesson-worked-result { overflow-wrap: anywhere; }
+}

@@ -181,7 +181,11 @@
           "answer": 3
         }
       ],
-      "eyebrow": ""
+      "eyebrow": "",
+      "workedExample": {
+        "explanation": "К be born подобрано подходящее дополнение: место и год рождения. Получилась готовая фраза.",
+        "completed": "be born in Kraków, Poland, in 1997"
+      }
     },
     {
       "type": "exercise",
@@ -308,7 +312,8 @@
         {
           "number": 1,
           "speaker": "A",
-          "text": "What time do you usually go to bed?"
+          "text": "What time do you usually go to bed?",
+          "exampleWord": "bed"
         },
         {
           "speaker": "B",
@@ -414,7 +419,10 @@
           "text": "In Budapest, in 1998. My mum is Hungarian."
         }
       ],
-      "eyebrow": ""
+      "eyebrow": "",
+      "workedExample": {
+        "explanation": "Первый диалог уже заполнен. В вопросе выделено bed: выражение go to bed означает «ложиться спать». Реплики A и B даны полностью."
+      }
     },
     {
       "type": "section",
@@ -434,7 +442,8 @@
           "number": 1,
           "example": true,
           "prompt": "Does your sister have / Your sister has a job?",
-          "exampleAnswer": "Does your sister have"
+          "exampleAnswer": "Does your sister have",
+          "exampleMode": "choice"
         },
         {
           "id": "2",
@@ -536,7 +545,11 @@
         }
       ],
       "inlineNumberedItems": true,
-      "eyebrow": ""
+      "eyebrow": "",
+      "workedExample": {
+        "explanation": "Из двух форм выбрана вопросительная: Does стоит перед your sister, а have остаётся в начальной форме.",
+        "completed": "Does your sister have a job?"
+      }
     },
     {
       "type": "exercise",
@@ -628,7 +641,11 @@
           "answer": "Did you have a nice time?"
         }
       ],
-      "eyebrow": ""
+      "eyebrow": "",
+      "workedExample": {
+        "explanation": "Слова переставлены в порядок специального вопроса: What + do + your parents + do? Исходные слова сохранены.",
+        "completed": "What do your parents do?"
+      }
     },
     {
       "type": "exercise",
@@ -742,7 +759,10 @@
         }
       ],
       "inlineNumberedItems": true,
-      "eyebrow": ""
+      "eyebrow": "",
+      "workedExample": {
+        "explanation": "Из подсказки (you / live) построен вопрос с Where. После Where поставлено do, затем you и начальная форма live."
+      }
     },
     {
       "type": "exercise",
@@ -958,7 +978,10 @@
         }
       ],
       "layout": "pronunciation-choice-table",
-      "eyebrow": ""
+      "eyebrow": "",
+      "workedExample": {
+        "explanation": "В образце выбрана E: буквы A и K содержат звук /eɪ/, а E произносится /iː/."
+      }
     },
     {
       "type": "exercise",
@@ -1069,16 +1092,9 @@
         }
       ],
       "eyebrow": "",
-      "introText": "Which letter of the alphabet sounds like...?",
-      "wordBank": [
-        "A",
-        "I",
-        "O",
-        "P",
-        "U",
-        "Y"
-      ],
-      "wordBankLabel": "Letters"
+      "workedExample": {
+        "explanation": "К слову my подобрана буква I: их окончания произносятся с одинаковым звуком /aɪ/."
+      }
     }
   ]
 }

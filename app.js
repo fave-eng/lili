@@ -1620,6 +1620,25 @@
     });
   }
 
+
+// Show source-book examples as clearly separated, completed models.
+// A worked example never becomes a scored response or a saved answer.
+function renderLessonWorkedExample(block, exampleHtml) {
+  const definition = block?.workedExample;
+  if (!definition || !exampleHtml) return exampleHtml;
+  const completed = definition.completed
+    ? `<div class="lesson-worked-result"><span class="lesson-worked-result-label">Готовая фраза</span><strong lang="en">${escapeHtml(definition.completed)}</strong></div>`
+    : '';
+  const explanation = definition.explanation
+    ? `<p class="lesson-worked-why"><strong>Что сделано:</strong> ${escapeHtml(definition.explanation)}</p>`
+    : '';
+  return `<aside class="lesson-worked-example" aria-label="Готовый пример выполнения">
+    <div class="lesson-worked-head"><span class="lesson-worked-label">EXAMPLE <span aria-hidden="true">·</span> ОБРАЗЕЦ</span><span class="lesson-worked-done">Уже выполнен · заполнять не нужно</span></div>
+    <div class="lesson-worked-content">${exampleHtml}</div>
+    ${completed}${explanation}
+  </aside>`;
+}
+
   function renderExerciseItem(item, blockId, index, inlineNumberedItems = false) {
     const itemId = safeText(item.id, `${index + 1}`);
     const number = item.number === undefined ? index + 1 : item.number;
@@ -1914,8 +1933,15 @@
 
   function renderPronunciationChoiceTable(block, blockId) {
     const items = Array.isArray(block.items) ? block.items : [];
-    return `<div class="pronunciation-choice-table" role="table" aria-label="Pronunciation exercise">
-      ${items.map((item, itemIndex) => {
+    const exampleRow = block.workedExample && items[0]?.example ? items[0] : null;
+    const visibleItems = exampleRow ? items.slice(1) : items;
+    const exampleHtml = exampleRow ? (() => {
+      const selectedIndex = Number(exampleRow.answer);
+      const options = (exampleRow.options || []).map((option, index) => `<span class="pronunciation-example-choice${index === selectedIndex ? ' is-selected' : ''}">${escapeHtml(option)}</span>`).join('');
+      return `<div class="pronunciation-choice-row exercise-item exercise-example" data-exercise-item="${escapeHtml(safeText(exampleRow.id))}"><div class="pronunciation-choice-reference"><span class="exercise-number">${escapeHtml(exampleRow.number ?? 1)}</span><strong>${escapeHtml(exampleRow.reference || '')}</strong></div><div class="pronunciation-choice-options">${options}</div></div>`;
+    })() : '';
+    return `${exampleHtml ? renderLessonWorkedExample(block, exampleHtml) : ''}<div class="pronunciation-choice-table" role="table" aria-label="Pronunciation exercise">
+      ${visibleItems.map((item, itemIndex) => {
         const itemId = safeText(item.id, `${itemIndex + 1}`);
         const inputId = `exercise-${blockId}-${itemId}`.replace(/[^a-zA-Z0-9_-]/g, '-');
         const number = item.number === undefined ? itemIndex + 1 : item.number;
@@ -1947,16 +1973,27 @@
       return `<div class="exercise-items">${items.map((item, itemIndex) => renderExerciseItem(item, blockId, itemIndex)).join('')}</div>`;
     }
 
-    return `<div class="dialogue-exercise" role="group" aria-label="Conversation exercise">${lines.map((line) => {
+    const renderLine = (line) => {
       const speaker = escapeHtml(line.speaker || '');
-      const text = line.text ? `<span class="dialogue-plain-text">${escapeHtml(line.text)}</span>` : '';
+      const rawText = safeText(line.text);
+      const exampleWord = safeText(line.exampleWord).trim();
+      const highlightAt = exampleWord ? rawText.lastIndexOf(exampleWord) : -1;
+      const displayText = highlightAt >= 0
+        ? `${escapeHtml(rawText.slice(0, highlightAt))}<strong class="lesson-worked-fill">${escapeHtml(exampleWord)}</strong>${escapeHtml(rawText.slice(highlightAt + exampleWord.length))}`
+        : escapeHtml(rawText);
+      const text = rawText ? `<span class="dialogue-plain-text">${displayText}</span>` : '';
       const lineItems = (Array.isArray(line.itemIds) ? line.itemIds : []).map((itemId) => {
         const entry = itemMap.get(safeText(itemId));
         return entry ? renderDialogueItem(entry.item, blockId, entry.index) : '';
       }).filter(Boolean).join(' ');
       const rowNumber = line.number !== undefined ? `<span class="dialogue-row-number">${escapeHtml(line.number)}</span>` : '<span class="dialogue-row-number" aria-hidden="true"></span>';
       return `<div class="dialogue-line">${rowNumber}<span class="dialogue-speaker" aria-label="Speaker ${speaker}">${speaker}</span><div class="dialogue-utterance">${text}${text && lineItems ? ' ' : ''}${lineItems}</div></div>`;
-    }).join('')}</div>`;
+    };
+    const hasCompletedDialogue = Boolean(block.workedExample && lines.length >= 2 && lines[0]?.number === 1 && lines[0]?.speaker === 'A' && lines[1]?.speaker === 'B' && !lines[0]?.itemIds?.length && !lines[1]?.itemIds?.length);
+    const completedModel = hasCompletedDialogue
+      ? renderLessonWorkedExample(block, lines.slice(0, 2).map(renderLine).join(''))
+      : '';
+    return `<div class="dialogue-exercise" role="group" aria-label="Conversation exercise">${completedModel}${(hasCompletedDialogue ? lines.slice(2) : lines).map(renderLine).join('')}</div>`;
   }
 
   function renderLinkedQuestionsExercise(block) {
@@ -2132,11 +2169,17 @@
                     ? renderPronunciationChoiceTable(block, id)
                     : block.layout === 'image-spelling-grid'
                       ? renderImageSpellingGrid(block, id)
-                      : `<div class="exercise-items">${items.map((item, itemIndex) => renderExerciseItem(item, id, itemIndex, block.inlineNumberedItems === true)).join('')}</div>`;
+                      : `<div class="exercise-items">${items.filter((item) => !block.workedExample || !item.example).map((item, itemIndex) => renderExerciseItem(item, id, itemIndex, block.inlineNumberedItems === true)).join('')}</div>`;
+      const firstExample = block.workedExample && !['dialogue', 'pronunciation-choice-table'].includes(block.layout)
+        ? items.find((item) => item.example)
+        : null;
+      const exampleHtml = firstExample
+        ? renderLessonWorkedExample(block, renderExerciseItem(firstExample, id, items.indexOf(firstExample), block.inlineNumberedItems === true))
+        : '';
       const hasStickyImage = block.stickyImage === true && imageEntries.length === 1;
       const exerciseBody = hasStickyImage
-        ? `<div class="exercise-sticky-layout"><div class="exercise-sticky-media">${image}</div><div class="exercise-sticky-content">${intro}${exerciseContent}</div></div>`
-        : `${image}${intro}${exerciseContent}`;
+        ? `<div class="exercise-sticky-layout"><div class="exercise-sticky-media">${image}</div><div class="exercise-sticky-content">${intro}${exampleHtml}${exerciseContent}</div></div>`
+        : `${image}${intro}${exampleHtml}${exerciseContent}`;
       return `<article class="card lesson-block exercise-card${block.layout === 'dialogue' ? ' dialogue-card' : ''}${hasStickyImage ? ' has-sticky-image' : ''}" data-task="${escapeHtml(id)}" data-type="exercise">
         <div class="exercise-heading">${Object.prototype.hasOwnProperty.call(block, 'eyebrow') ? (safeText(block.eyebrow) ? `<span class="eyebrow">${escapeHtml(safeText(block.eyebrow))}</span>` : '') : '<span class="eyebrow">Exercise</span>'}<h3>${title}</h3>${block.instructions && safeText(block.title).replace(/^[a-z]\s*·\s*/i, '').trim().toLowerCase().replace(/[.!?]+$/, '') !== safeText(block.instructions).trim().toLowerCase().replace(/[.!?]+$/, '') ? `<p class="muted exercise-instructions">${escapeHtml(block.instructions)}</p>` : ''}${player}${wordBank}${wordBanks}</div>
         ${exerciseBody}
