@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="English reference library.">
   <title>Knowledge Base · Lili's English Space</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=lili-1a-20261023">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="config.js" defer></script>
-  <script src="data/vocabulary-data.js" defer></script>
-  <script src="data/grammar-data.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="data/vocabulary-data.js?v=lili-1a-20261023" defer></script>
+  <script src="data/grammar-data.js?v=lili-1a-20261023" defer></script>
+  <script src="app.js?v=lili-1a-20261023" defer></script>
 </head>
 <body class="has-bottom-nav" data-page="knowledge" data-view="knowledge">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -25,7 +25,26 @@
   </header>
   <main id="main" class="main-content container kb-library">
     <nav class="kb-breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><span>Knowledge Base</span></nav>
-    <section class="section"><div class="kb-unit-heading"><span class="kb-unit-chip">REFERENCE LIBRARY</span><h2>Knowledge Base</h2><p>Materials will appear here when we start studying.</p></div></section>
+    <section class="section" aria-labelledby="knowledge-current-title">
+      <div class="kb-unit-heading"><span class="kb-unit-chip">ENGLISH FILE A2 · 4TH EDITION</span><h2 id="knowledge-current-title">Study reference · Unit 1A</h2><p>Only the material from your current course is shown here. Level: A2.1 (Pre-intermediate).</p></div>
+      <div class="kb-topic-nav" aria-label="Current learning materials">
+        <a href="lesson.html?id=lesson-1"><small>WORKBOOK · 1A</small><strong>Are you? Can you? Do you? Did you?</strong><span>→</span></a>
+        <a href="grammar-topic.html?id=grammar-questions-word-order"><small>GRAMMAR · 1A</small><strong>Word order in questions</strong><span>→</span></a>
+        <a href="vocabulary.html?id=vocab-lesson-1"><small>VOCABULARY · 1A</small><strong>Common verb phrases</strong><span>→</span></a>
+      </div>
+    </section>
+    <section class="section" aria-labelledby="knowledge-summary-title">
+      <article class="kb-article"><span class="kb-section-label"><span>1A</span> QUICK REFERENCE</span><h2 id="knowledge-summary-title">Questions in English</h2>
+        <p class="muted">Use the detailed grammar page for rules, comparisons, and exercises. These are the core patterns from your current lesson.</p>
+        <div class="table-wrap"><table><thead><tr><th>Situation</th><th>Question pattern</th><th>Example</th></tr></thead><tbody>
+          <tr><td>Present Simple</td><td>Do / Does + subject + verb</td><td>Where do you live?</td></tr>
+          <tr><td>Past Simple</td><td>Did + subject + base verb</td><td>What did you do last night?</td></tr>
+          <tr><td>be</td><td>Am / Is / Are / Was / Were + subject</td><td>Where were you born?</td></tr>
+          <tr><td>can</td><td>Can + subject + base verb</td><td>Can I help you?</td></tr>
+        </tbody></table></div>
+        <p><a class="kb-secondary-link" href="grammar-topic.html?id=grammar-questions-word-order">Read the full explanation and practise →</a></p>
+      </article>
+    </section>
   </main>
   <nav class="bottom-nav" aria-label="Main navigation">
     <a class="nav-link" data-nav="home" href="index.html"><span class="nav-icon">🏠</span><span>Home</span></a>

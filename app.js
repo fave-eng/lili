@@ -1773,6 +1773,13 @@
     }
 
     let control = '';
+    if (item.input === 'word-order') {
+      const words = Array.isArray(item.words) ? item.words : [];
+      const chips = words.map((word, position) => `<button type="button" class="lesson-order-word" data-order-word="${position}" draggable="true" aria-label="Add word ${escapeHtml(word)}">${escapeHtml(word)}</button>`).join('');
+      const control = `<div class="lesson-order-work" data-order-work><div class="lesson-order-palette" data-order-palette aria-label="Words to arrange">${chips}</div><div class="lesson-order-target" data-order-target aria-label="Your word order"></div><input class="lesson-order-value" type="text" readonly aria-label="Your completed question"></div>`;
+      return `<div class="exercise-item" data-exercise-item="${escapeHtml(itemId)}" data-input-type="word-order"><div class="exercise-item-header">${numberMarkup}</div><div class="exercise-control">${control}</div><div class="feedback" aria-live="polite"></div></div>`;
+    }
+
     if (item.input === 'example-gap') {
       const segments = Array.isArray(item.segments) ? item.segments : [];
       control = `<div class="sentence-gaps numbered-example-gap"><span>${escapeHtml(segments[0] || '')}</span><span class="inline-example-answer"><b>${escapeHtml(item.exampleNumber || 1)}</b> ${escapeHtml(item.exampleAnswer || '')}</span><span>${escapeHtml(segments[1] || '')}</span><span class="inline-gap-number">${escapeHtml(item.gapNumber || 2)}</span><input class="gap-input" data-example-gap autocomplete="off"><span>${escapeHtml(segments[2] || '')}</span></div>`;
@@ -1942,8 +1949,108 @@
         const entry = itemMap.get(safeText(itemId));
         return entry ? renderDialogueItem(entry.item, blockId, entry.index) : '';
       }).filter(Boolean).join(' ');
-      return `<div class="dialogue-line"><span class="dialogue-speaker" aria-label="Speaker ${speaker}">${speaker}</span><div class="dialogue-utterance">${text}${text && lineItems ? ' ' : ''}${lineItems}</div></div>`;
+      const rowNumber = line.number !== undefined ? `<span class="dialogue-row-number">${escapeHtml(line.number)}</span>` : '<span class="dialogue-row-number"></span>';
+      return `<div class="dialogue-line">${rowNumber}<span class="dialogue-speaker" aria-label="Speaker ${speaker}">${speaker}</span><div class="dialogue-utterance">${text}${text && lineItems ? ' ' : ''}${lineItems}</div></div>`;
     }).join('')}</div>`;
+  }
+
+  function renderLinkedQuestionsExercise(block) {
+    const items = Array.isArray(block.items) ? block.items : [];
+    return `<div class="lesson-linked-questions" data-linked-source="${escapeHtml(block.linkedFrom || '')}"><div class="lesson-linked-notice" data-linked-notice>Complete all the questions in exercise c first.</div>${items.map((item, index) => {
+      const itemId = safeText(item.id, index + 1);
+      return `<div class="exercise-item lesson-linked-row" data-exercise-item="${escapeHtml(itemId)}" data-input-type="textarea"><div class="exercise-item-header"><span class="exercise-number">${escapeHtml(item.number ?? index + 1)}</span><label class="exercise-prompt" data-linked-question="${escapeHtml(itemId)}">&nbsp;</label></div><div class="exercise-control"><textarea aria-label="Your personal answer to question ${escapeHtml(itemId)}" disabled></textarea></div><div class="feedback" aria-live="polite"></div></div>`;
+    }).join('')}</div>`;
+  }
+
+  function initializeLessonWordOrder(root, blocks) {
+    blocks.filter((block) => block.type === 'exercise').forEach((block) => {
+      (block.items || []).filter((item) => item.input === 'word-order').forEach((item) => {
+        const itemNode = root.querySelector(`[data-task="${CSS.escape(block.id)}"] [data-exercise-item="${CSS.escape(safeText(item.id))}"]`);
+        if (!itemNode) return;
+        const words = Array.isArray(item.words) ? item.words : [];
+        const input = itemNode.querySelector('.lesson-order-value');
+        const palette = itemNode.querySelector('[data-order-palette]');
+        const target = itemNode.querySelector('[data-order-target]');
+        let picked = [];
+        const restored = safeText(input.value).trim().replace(/[?]+$/, '').split(/\s+/).filter(Boolean);
+        const used = new Set();
+        restored.forEach((token) => {
+          const pos = words.findIndex((word, index) => !used.has(index) && normalizeAnswer(word) === normalizeAnswer(token));
+          if (pos >= 0) { used.add(pos); picked.push(pos); }
+        });
+        const draw = () => {
+          palette.querySelectorAll('[data-order-word]').forEach((button) => {
+            button.hidden = picked.includes(Number(button.dataset.orderWord));
+          });
+          target.innerHTML = picked.length
+            ? picked.map((position, orderIndex) => `<button type="button" class="lesson-order-word is-picked" data-picked-position="${orderIndex}" draggable="true">${escapeHtml(words[position])}</button>`).join('') + (picked.length === words.length ? '<span class="lesson-order-punctuation">?</span>' : '')
+            : '<span class="lesson-order-placeholder">Your question appears here</span>';
+          input.value = picked.map((index) => words[index]).join(' ');
+        };
+        const notify = () => input.dispatchEvent(new Event('input', { bubbles: true }));
+        palette.addEventListener('click', (event) => {
+          const button = event.target.closest('[data-order-word]');
+          if (!button) return;
+          const position = Number(button.dataset.orderWord);
+          if (!picked.includes(position)) { picked.push(position); draw(); notify(); }
+        });
+        target.addEventListener('click', (event) => {
+          const button = event.target.closest('[data-picked-position]');
+          if (!button) return;
+          picked.splice(Number(button.dataset.pickedPosition), 1); draw(); notify();
+        });
+        let dragged = null;
+        palette.addEventListener('dragstart', (event) => { const button = event.target.closest('[data-order-word]'); if (button) dragged={from:'palette',position:Number(button.dataset.orderWord)}; });
+        target.addEventListener('dragstart', (event) => { const button = event.target.closest('[data-picked-position]'); if (button) dragged={from:'target',position:Number(button.dataset.pickedPosition)}; });
+        target.addEventListener('dragover', (event) => event.preventDefault());
+        target.addEventListener('drop', (event) => {
+          event.preventDefault(); if (!dragged) return;
+          const button=event.target.closest('[data-picked-position]');
+          let index=button? Number(button.dataset.pickedPosition):picked.length;
+          if (dragged.from==='palette') {
+            if (!picked.includes(dragged.position)) picked.splice(index,0,dragged.position);
+          } else {
+            const old=dragged.position;
+            const [word]=picked.splice(old,1);
+            if (index>old) index--;
+            picked.splice(index,0,word);
+          }
+          dragged=null;draw();notify();
+        });
+        draw();
+      });
+    });
+  }
+
+  function initializeLinkedLessonQuestions(root, blocks) {
+    const dependents = blocks.filter((block) => block.type === 'exercise' && block.layout === 'linked-questions');
+    if (!dependents.length) return;
+    const update = () => {
+      dependents.forEach((block) => {
+        const target = root.querySelector(`[data-task="${CSS.escape(block.id)}"]`);
+        const source = root.querySelector(`[data-task="${CSS.escape(block.linkedFrom)}"]`);
+        if (!target || !source) return;
+        const sourceEntries = [...source.querySelectorAll('.exercise-item:not(.exercise-example) [data-gap-index="0"]')];
+        const ready = sourceEntries.length === 6 && sourceEntries.every((input) => input.value.trim() !== '');
+        target.classList.toggle('lesson-linked-locked', !ready);
+        const notice = target.querySelector('[data-linked-notice]');
+        if (notice) notice.hidden = ready;
+        target.querySelectorAll('[data-linked-question]').forEach((node) => {
+          const number = Number(node.dataset.linkedQuestion);
+          if (ready) {
+            const text = number === 1 ? safeText(block.firstQuestion) : safeText(source.querySelector(`[data-exercise-item="${number}"] [data-gap-index="0"]`)?.value);
+            const prefix = safeText(block.questionStarts?.[number - 1]);
+            node.textContent = number === 1 ? text : `${prefix} ${text}${/[?]\s*$/.test(text) ? '' : '?'}`;
+          } else {
+            node.textContent = '';
+          }
+        });
+        target.querySelectorAll('textarea').forEach((input) => { input.disabled = !ready; });
+      });
+    };
+    root.addEventListener('input', update);
+    root.addEventListener('change', update);
+    update();
   }
 
   function renderLessonBlock(block, index) {
@@ -1998,7 +2105,9 @@
           }).join('')}</div>`
         : '';
       const intro = block.introTitle || block.introText ? `<div class="exercise-source"><h4>${escapeHtml(block.introTitle || '')}</h4>${block.introText ? `<p>${escapeHtml(block.introText)}</p>` : ''}</div>` : '';
-      const exerciseContent = block.layout === 'vowel-sort'
+      const exerciseContent = block.layout === 'linked-questions'
+        ? renderLinkedQuestionsExercise(block)
+        : block.layout === 'vowel-sort'
         ? renderVowelSortExercise(block)
         : block.layout === 'dialogue'
         ? renderDialogueExercise(block, id)
@@ -2365,6 +2474,8 @@
 
     restoreLessonAnswers(root, blocks, savedResult?.answers);
     wireLessonInteractiveInputs(root);
+    initializeLessonWordOrder(root, blocks);
+    initializeLinkedLessonQuestions(root, blocks);
 
     root.querySelectorAll('[data-reorder-source]').forEach((source) => {
       source.addEventListener('click', (event) => {

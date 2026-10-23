@@ -1,0 +1,1064 @@
+{
+  "id": "lesson-1",
+  "number": 1,
+  "title": "1A · Are you? Can you? Do you? Did you?",
+  "subtitle": "English File A2 · 4th Edition · Workbook · pp. 4–5",
+  "status": "available",
+  "vocabularyId": "vocab-lesson-1",
+  "grammarIds": [
+    "grammar-questions-word-order"
+  ],
+  "publishedAt": "2026-10-23",
+  "totalPoints": 46,
+  "notification": {
+    "enabled": false,
+    "version": 1
+  },
+  "blocks": [
+    {
+      "type": "section",
+      "id": "s1",
+      "title": "1 VOCABULARY",
+      "text": "common verb phrases"
+    },
+    {
+      "type": "exercise",
+      "id": "v-1a",
+      "title": "a · Match verbs 1–9 to the nouns.",
+      "instructions": "Match verbs 1–9 to the nouns.",
+      "hideAnswersOnError": true,
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "example": true,
+          "exampleTextOnly": true,
+          "prompt": "be born  —  i"
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "input": "select",
+          "prompt": "do",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i"
+          ],
+          "answer": 5
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "input": "select",
+          "prompt": "listen to",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i"
+          ],
+          "answer": 7
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "input": "select",
+          "prompt": "read",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i"
+          ],
+          "answer": 2
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "input": "select",
+          "prompt": "speak",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i"
+          ],
+          "answer": 6
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "input": "select",
+          "prompt": "live",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "7",
+          "number": 7,
+          "input": "select",
+          "prompt": "watch",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "8",
+          "number": 8,
+          "input": "select",
+          "prompt": "go",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i"
+          ],
+          "answer": 4
+        },
+        {
+          "id": "9",
+          "number": 9,
+          "input": "select",
+          "prompt": "have",
+          "options": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e",
+            "f",
+            "g",
+            "h",
+            "i"
+          ],
+          "answer": 3
+        }
+      ],
+      "wordBank": [
+        "a  a film, a TV series",
+        "b  in a house, with friends",
+        "c  an email, a magazine",
+        "d  two sisters, a pet",
+        "e  to the cinema, on holiday",
+        "f  exercise, sport",
+        "g  a foreign language, English",
+        "h  dance music, R&B",
+        "i  in Kraków, Poland, in 1997"
+      ],
+      "wordBankLabel": "a–i"
+    },
+    {
+      "type": "exercise",
+      "id": "v-1b",
+      "title": "b · Complete the conversations with the missing word.",
+      "instructions": "Complete the conversations with the missing word.",
+      "hideAnswersOnError": true,
+      "items": [
+        {
+          "id": "2",
+          "number": "",
+          "input": "gaps",
+          "answers": [
+            "do"
+          ],
+          "segments": [
+            "What did you ",
+            " last weekend?"
+          ]
+        },
+        {
+          "id": "3",
+          "number": "",
+          "input": "gaps",
+          "answers": [
+            "sport"
+          ],
+          "segments": [
+            "Do you do any ",
+            " or exercise?"
+          ]
+        },
+        {
+          "id": "4",
+          "number": "",
+          "input": "gaps",
+          "answers": [
+            "music"
+          ],
+          "segments": [
+            "What kind of ",
+            " do you listen to?"
+          ]
+        },
+        {
+          "id": "5",
+          "number": "",
+          "input": "gaps",
+          "answers": [
+            "lunch"
+          ],
+          "segments": [
+            "What do you usually have for ",
+            "?"
+          ]
+        },
+        {
+          "id": "6",
+          "number": "",
+          "input": "gaps",
+          "answers": [
+            "pets"
+          ],
+          "segments": [
+            "Do you have any ",
+            "?"
+          ]
+        },
+        {
+          "id": "7",
+          "number": "",
+          "input": "gaps",
+          "answers": [
+            "live"
+          ],
+          "segments": [
+            "Where do you ",
+            "?"
+          ]
+        },
+        {
+          "id": "8",
+          "number": "",
+          "input": "gaps",
+          "answers": [
+            [
+              "do",
+              "learn",
+              "study"
+            ]
+          ],
+          "segments": [
+            "Where did you ",
+            " English before?"
+          ]
+        },
+        {
+          "id": "9",
+          "number": "",
+          "input": "gaps",
+          "answers": [
+            "do"
+          ],
+          "segments": [
+            "What does your father ",
+            "?"
+          ]
+        },
+        {
+          "id": "10",
+          "number": "",
+          "input": "gaps",
+          "answers": [
+            "born"
+          ],
+          "segments": [
+            "Where were you ",
+            "?"
+          ]
+        }
+      ],
+      "layout": "dialogue",
+      "dialogueLines": [
+        {
+          "number": 1,
+          "speaker": "A",
+          "text": "What time do you usually go to bed?"
+        },
+        {
+          "speaker": "B",
+          "text": "At about 10.30, and I get up at 7.00."
+        },
+        {
+          "number": 2,
+          "speaker": "A",
+          "itemIds": [
+            "2"
+          ]
+        },
+        {
+          "speaker": "B",
+          "text": "I went to the cinema with some friends."
+        },
+        {
+          "number": 3,
+          "speaker": "A",
+          "itemIds": [
+            "3"
+          ]
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, I love football and tennis."
+        },
+        {
+          "number": 4,
+          "speaker": "A",
+          "itemIds": [
+            "4"
+          ]
+        },
+        {
+          "speaker": "B",
+          "text": "I love pop and rock."
+        },
+        {
+          "number": 5,
+          "speaker": "A",
+          "itemIds": [
+            "5"
+          ]
+        },
+        {
+          "speaker": "B",
+          "text": "Just a sandwich and some crisps normally."
+        },
+        {
+          "number": 6,
+          "speaker": "A",
+          "itemIds": [
+            "6"
+          ]
+        },
+        {
+          "speaker": "B",
+          "text": "Yes, we have two cats."
+        },
+        {
+          "number": 7,
+          "speaker": "A",
+          "itemIds": [
+            "7"
+          ]
+        },
+        {
+          "speaker": "B",
+          "text": "In a small flat near the railway station."
+        },
+        {
+          "number": 8,
+          "speaker": "A",
+          "itemIds": [
+            "8"
+          ]
+        },
+        {
+          "speaker": "B",
+          "text": "At school."
+        },
+        {
+          "number": 9,
+          "speaker": "A",
+          "itemIds": [
+            "9"
+          ]
+        },
+        {
+          "speaker": "B",
+          "text": "He’s a teacher."
+        },
+        {
+          "number": 10,
+          "speaker": "A",
+          "itemIds": [
+            "10"
+          ]
+        },
+        {
+          "speaker": "B",
+          "text": "In Budapest, in 1998. My mum is Hungarian."
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "s2",
+      "title": "2 GRAMMAR",
+      "text": "word order in questions"
+    },
+    {
+      "type": "exercise",
+      "id": "g-2a",
+      "title": "a · Circle the correct form.",
+      "instructions": "Circle the correct form.",
+      "hideAnswersOnError": true,
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "example": true,
+          "prompt": "Does your sister have / Your sister has a job?",
+          "exampleAnswer": "Does your sister have"
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "input": "single",
+          "segments": [
+            "Hello, ",
+            " help you?"
+          ],
+          "options": [
+            "I can",
+            "can I"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "input": "single",
+          "segments": [
+            "Where ",
+            " born?"
+          ],
+          "options": [
+            "were you",
+            "you were"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "input": "single",
+          "segments": [
+            "",
+            " a drink?"
+          ],
+          "options": [
+            "Do the children want",
+            "Want the children"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "input": "single",
+          "segments": [
+            "",
+            " the football match on TV last night?"
+          ],
+          "options": [
+            "Did you see",
+            "Saw you"
+          ],
+          "answer": 0
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "input": "single",
+          "segments": [
+            "What ",
+            " do?"
+          ],
+          "options": [
+            "do your boyfriend",
+            "does your boyfriend"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "7",
+          "number": 7,
+          "input": "single",
+          "segments": [
+            "Where ",
+            " to speak English?"
+          ],
+          "options": [
+            "she learnt",
+            "did she learn"
+          ],
+          "answer": 1
+        },
+        {
+          "id": "8",
+          "number": 8,
+          "input": "single",
+          "segments": [
+            "What time ",
+            " in the morning?"
+          ],
+          "options": [
+            "do you get up",
+            "get you up"
+          ],
+          "answer": 0
+        }
+      ],
+      "inlineNumberedItems": true
+    },
+    {
+      "type": "exercise",
+      "id": "g-2b",
+      "title": "b · Re-order the words to make questions.",
+      "instructions": "Re-order the words to make questions.",
+      "hideAnswersOnError": true,
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "example": true,
+          "prompt": "do / do / parents / what / your",
+          "exampleAnswer": "What do your parents do?"
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "input": "word-order",
+          "words": [
+            "girlfriend",
+            "student",
+            "is",
+            "a",
+            "your"
+          ],
+          "prompt": "girlfriend / student / is / a / your",
+          "answer": "Is your girlfriend a student?"
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "input": "word-order",
+          "words": [
+            "what",
+            "at",
+            "you",
+            "do",
+            "the",
+            "weekend",
+            "do"
+          ],
+          "prompt": "what / at / you / do / the / weekend / do",
+          "answer": "What do you do at the weekend?"
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "input": "word-order",
+          "words": [
+            "out",
+            "how",
+            "you",
+            "go",
+            "often",
+            "do"
+          ],
+          "prompt": "out / how / you / go / often / do",
+          "answer": "How often do you go out?"
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "input": "word-order",
+          "words": [
+            "did",
+            "go",
+            "last",
+            "where",
+            "you",
+            "Saturday"
+          ],
+          "prompt": "did / go / last / where / you / Saturday",
+          "answer": "Where did you go last Saturday?"
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "input": "word-order",
+          "words": [
+            "a",
+            "did",
+            "time",
+            "nice",
+            "you",
+            "have"
+          ],
+          "prompt": "a / did / time / nice / you / have",
+          "answer": "Did you have a nice time?"
+        }
+      ]
+    },
+    {
+      "type": "exercise",
+      "id": "g-2c",
+      "title": "c · Write questions in the present or past simple.",
+      "instructions": "Write questions in the present or past simple.",
+      "hideAnswersOnError": true,
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "example": true,
+          "prompt": "Where do you live?   (you / live)",
+          "exampleTextOnly": true
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "input": "gaps",
+          "segments": [
+            "What ",
+            "?"
+          ],
+          "contextParts": [
+            "(you / do last night)"
+          ],
+          "answer": "did you do last night"
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "input": "gaps",
+          "segments": [
+            "What ",
+            "?"
+          ],
+          "contextParts": [
+            "(TV series / you / watch)"
+          ],
+          "answer": "TV series do you watch"
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "input": "gaps",
+          "segments": [
+            "When ",
+            "?"
+          ],
+          "contextParts": [
+            "(your birthday)"
+          ],
+          "answer": "is your birthday"
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "input": "gaps",
+          "segments": [
+            "Where ",
+            "?"
+          ],
+          "contextParts": [
+            "(you / from)"
+          ],
+          "answer": "are you from"
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "input": "gaps",
+          "segments": [
+            "Where ",
+            "?"
+          ],
+          "contextParts": [
+            "(you / go / on holiday last year)"
+          ],
+          "answer": "did you go on holiday last year"
+        },
+        {
+          "id": "7",
+          "number": 7,
+          "input": "gaps",
+          "segments": [
+            "What kind of books ",
+            "?"
+          ],
+          "contextParts": [
+            "(you / read)"
+          ],
+          "answer": "do you read"
+        }
+      ],
+      "inlineNumberedItems": true
+    },
+    {
+      "type": "exercise",
+      "id": "g-2d",
+      "title": "d · Answer the questions in c about you.",
+      "instructions": "Answer the questions in c about you.",
+      "hideAnswersOnError": true,
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "input": "textarea",
+          "scored": false,
+          "prompt": ""
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "input": "textarea",
+          "scored": false,
+          "prompt": ""
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "input": "textarea",
+          "scored": false,
+          "prompt": ""
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "input": "textarea",
+          "scored": false,
+          "prompt": ""
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "input": "textarea",
+          "scored": false,
+          "prompt": ""
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "input": "textarea",
+          "scored": false,
+          "prompt": ""
+        },
+        {
+          "id": "7",
+          "number": 7,
+          "input": "textarea",
+          "scored": false,
+          "prompt": ""
+        }
+      ],
+      "layout": "linked-questions",
+      "linkedFrom": "g-2c",
+      "questionStarts": [
+        "Where",
+        "What",
+        "What",
+        "When",
+        "Where",
+        "Where",
+        "What kind of books"
+      ],
+      "firstQuestion": "Where do you live?"
+    },
+    {
+      "type": "section",
+      "id": "s3",
+      "title": "3 PRONUNCIATION",
+      "text": "the alphabet"
+    },
+    {
+      "type": "exercise",
+      "id": "p-3a",
+      "title": "a · Circle the letter with a different vowel sound.",
+      "instructions": "Circle the letter with a different vowel sound.",
+      "hideAnswersOnError": true,
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "example": true,
+          "prompt": "train · A / K / E",
+          "exampleAnswer": "E",
+          "reference": "train",
+          "options": [
+            "A",
+            "K",
+            "E"
+          ],
+          "answer": 2
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "input": "single",
+          "options": [
+            "G",
+            "V",
+            "R"
+          ],
+          "segments": [
+            "",
+            ""
+          ],
+          "contextParts": [
+            "tree · "
+          ],
+          "answer": 2,
+          "reference": "tree"
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "input": "single",
+          "options": [
+            "N",
+            "B",
+            "F"
+          ],
+          "segments": [
+            "",
+            ""
+          ],
+          "contextParts": [
+            "egg · "
+          ],
+          "answer": 1,
+          "reference": "egg"
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "input": "single",
+          "options": [
+            "H",
+            "P",
+            "J"
+          ],
+          "segments": [
+            "",
+            ""
+          ],
+          "contextParts": [
+            "train · "
+          ],
+          "answer": 1,
+          "reference": "train"
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "input": "single",
+          "options": [
+            "X",
+            "S",
+            "K"
+          ],
+          "segments": [
+            "",
+            ""
+          ],
+          "contextParts": [
+            "egg · "
+          ],
+          "answer": 2,
+          "reference": "egg"
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "input": "single",
+          "options": [
+            "M",
+            "C",
+            "D"
+          ],
+          "segments": [
+            "",
+            ""
+          ],
+          "contextParts": [
+            "tree · "
+          ],
+          "answer": 0,
+          "reference": "tree"
+        },
+        {
+          "id": "7",
+          "number": 7,
+          "input": "single",
+          "options": [
+            "Q",
+            "I",
+            "U"
+          ],
+          "segments": [
+            "",
+            ""
+          ],
+          "contextParts": [
+            "boot · "
+          ],
+          "answer": 1,
+          "reference": "boot"
+        }
+      ],
+      "layout": "pronunciation-choice-table",
+      "image": "images/ef-a2-1a-sound-guide.svg",
+      "imageAlt": "Vowel sounds in the alphabet: train, tree, egg, boot",
+      "stickyImage": true
+    },
+    {
+      "type": "exercise",
+      "id": "p-3b",
+      "title": "b · 1.1 Listen and check. Then listen again and repeat the letters.",
+      "instructions": "1.1 Listen and check. Then listen again and repeat the letters.",
+      "hideAnswersOnError": true,
+      "items": [
+        {
+          "id": "repeat",
+          "number": "",
+          "input": "checkbox",
+          "prompt": "I repeated",
+          "scored": false
+        }
+      ],
+      "audio": "audio/English_File_4e_Pre-intermediate_WB_1.1.mp3"
+    },
+    {
+      "type": "exercise",
+      "id": "p-3c",
+      "title": "c · Complete the alphabet quiz.",
+      "instructions": "Complete the alphabet quiz.",
+      "hideAnswersOnError": true,
+      "items": [
+        {
+          "id": "1",
+          "number": 1,
+          "example": true,
+          "prompt": "my → I",
+          "exampleTextOnly": true
+        },
+        {
+          "id": "2",
+          "number": 2,
+          "input": "select",
+          "options": [
+            "A",
+            "I",
+            "O",
+            "P",
+            "U",
+            "Y"
+          ],
+          "prompt": "play",
+          "answer": 0
+        },
+        {
+          "id": "3",
+          "number": 3,
+          "input": "select",
+          "options": [
+            "A",
+            "I",
+            "O",
+            "P",
+            "U",
+            "Y"
+          ],
+          "prompt": "you",
+          "answer": 4
+        },
+        {
+          "id": "4",
+          "number": 4,
+          "input": "select",
+          "options": [
+            "A",
+            "I",
+            "O",
+            "P",
+            "U",
+            "Y"
+          ],
+          "prompt": "see",
+          "answer": 3
+        },
+        {
+          "id": "5",
+          "number": 5,
+          "input": "select",
+          "options": [
+            "A",
+            "I",
+            "O",
+            "P",
+            "U",
+            "Y"
+          ],
+          "prompt": "go",
+          "answer": 2
+        },
+        {
+          "id": "6",
+          "number": 6,
+          "input": "select",
+          "options": [
+            "A",
+            "I",
+            "O",
+            "P",
+            "U",
+            "Y"
+          ],
+          "prompt": "why",
+          "answer": 5
+        }
+      ],
+      "image": "images/ef-a2-1a-alphabet-quiz.svg",
+      "imageAlt": "Alphabet quiz: Which letter of the alphabet sounds like...? Letters A, I, O, P, U, Y.",
+      "stickyImage": true
+    }
+  ]
+}
