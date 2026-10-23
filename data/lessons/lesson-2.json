@@ -95,7 +95,7 @@
           "example": true,
           "prompt": "Thanks for paying for dinner – that was very ______ (enersuog).",
           "exampleAnswer": "generous",
-          "exampleMode": "text"
+          "exampleTextOnly": true
         },
         {
           "id": "2",
@@ -196,7 +196,7 @@
       ],
       "eyebrow": "",
       "workedExample": {
-        "explanation": "Из букв enersuog составлено generous; слово подходит по смыслу к благодарности за ужин.",
+        "explanation": "В исходном предложении есть буквы enersuog. Переставляем их и получаем generous (щедрый). В готовой фразе слово стоит вместо пропуска.",
         "completed": "Thanks for paying for dinner – that was very generous."
       }
     },
@@ -211,9 +211,17 @@
           "id": "1",
           "number": 1,
           "example": true,
-          "prompt": "Does your boyfriend have brown ______ eyes or blue ______ eyes?",
-          "exampleAnswer": "brown eyes or blue eyes",
-          "exampleMode": "text"
+          "prompt": "Does your boyfriend have brown eyes or blue eyes?",
+          "exampleMode": "gaps",
+          "segments": [
+            "Does your boyfriend have ",
+            " eyes or ",
+            " eyes?"
+          ],
+          "exampleAnswers": [
+            "brown",
+            "blue"
+          ]
         },
         {
           "id": "2",
@@ -380,8 +388,7 @@
       ],
       "eyebrow": "",
       "workedExample": {
-        "explanation": "Указаны два цвета глаз: brown и blue. Пример уже заполнен; другие предложения нужно дополнить самостоятельно.",
-        "completed": "Does your boyfriend have brown eyes or blue eyes?"
+        "explanation": "В учебнике слова brown и blue уже даны и подчёркнуты как образец: они обозначают цвет глаз. Это готовый вопрос, дополнять его не нужно."
       }
     },
     {
