@@ -8,9 +8,50 @@
   <link rel="stylesheet" href="styles.css?v=lili-1b-20261023">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
   <script src="config.js" defer></script>
-  <script src="data/vocabulary-data.js?v=lili-1b-20261023" defer></script>
+  <script src="data/vocabulary-data.js?v=lili-irregular-20261023-v1" defer></script>
   <script src="data/grammar-data.js?v=lili-1b-20261023" defer></script>
   <script src="app.js?v=lili-1b-20261023" defer></script>
+<style>
+  .kb-learning { max-width: 1160px; }
+  .kb-study-head { display:flex; justify-content:space-between; align-items:end; gap:20px; margin-bottom:18px; flex-wrap:wrap; }
+  .kb-study-head h2 { margin:5px 0 8px; }
+  .kb-study-head p { color:var(--muted,#64748b); max-width:680px; margin:0; line-height:1.6; }
+  .kb-daily-card { background:linear-gradient(130deg,#eff6ff,#eef2ff 58%,#faf5ff); border:1px solid #c7d2fe; border-radius:22px; padding:clamp(18px,3vw,30px); box-shadow:0 9px 25px rgba(67,56,202,.07); }
+  .kb-date { color:#475569; font-weight:700; font-size:.84rem; letter-spacing:.03em; text-transform:uppercase; }
+  .kb-daily-verb { font-size:clamp(2rem,6vw,3.25rem); font-weight:850; color:#312e81; line-height:1.2; margin:12px 0; }
+  .kb-daily-forms { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:15px 0; }
+  .kb-daily-forms div { min-width:0; background:#fff; border:1px solid #ddd6fe; border-radius:14px; padding:12px; }
+  .kb-daily-forms span { display:block; font-size:.76rem; color:#64748b; font-weight:750; margin-bottom:5px; }
+  .kb-daily-forms strong { color:#1e1b4b; font-size:clamp(.95rem,2.5vw,1.2rem); overflow-wrap:anywhere; }
+  .kb-ru { font-size:1.1rem; color:#334155; margin:8px 0; }
+  .kb-guide-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+  .kb-study-card { background:#fff; padding:22px; border:1px solid #e2e8f0; border-radius:18px; }
+  .kb-study-card h3 { margin:10px 0; font-size:1.25rem; }
+  .kb-study-card p,.kb-rule p { line-height:1.6; color:#475569; }
+  .kb-study-card a { display:inline-block; margin-top:13px; font-weight:750; color:#4338ca; }
+  .kb-card-label { font-size:.77rem; letter-spacing:.07em; font-weight:850; color:#4338ca; }
+  .kb-mini-pattern { background:#f8fafc; border-radius:12px; padding:12px 16px; line-height:1.8; font-size:.94rem; }
+  .kb-lesson-nav { margin-top:18px; }
+  .kb-rules-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+  .kb-rule { background:#fff; padding:18px; border-radius:16px; border:1px solid #e2e8f0; }
+  .kb-rule b { color:#312e81; }
+  .kb-sentence { background:#eef2ff; border-radius:10px; padding:10px; color:#312e81!important; }
+  .kb-note { background:#f8fafc; border-left:4px solid #818cf8; padding:16px; border-radius:8px; line-height:1.7; margin-top:18px; }
+  .kb-search-label { display:block; margin:15px 0 6px; font-weight:700; }
+  .kb-verb-search { width:100%; max-width:560px; padding:14px 15px; border-radius:12px; border:1px solid #cbd5e1; background:#fff; font:inherit; color:#0f172a; }
+  .kb-verb-search:focus { outline:3px solid #c7d2fe; border-color:#6366f1; }
+  .kb-table-wrap { overflow:auto; width:100%; margin-top:16px; border-radius:16px; border:1px solid #e2e8f0; background:white; }
+  .kb-verbs-table { width:100%; min-width:625px; border-collapse:collapse; text-align:left; }
+  .kb-verbs-table th { padding:14px; background:#e0e7ff; color:#312e81; position:sticky; top:0; font-size:.9rem; }
+  .kb-verbs-table td { padding:12px 14px; border-top:1px solid #e2e8f0; vertical-align:top; }
+  .kb-verbs-table tbody tr:nth-child(even) { background:#f8fafc; }
+  .kb-verbs-table td:first-child { font-weight:750; color:#1e293b; }
+  .kb-results { color:#64748b; font-size:.86rem; margin-top:10px; }
+  .kb-steps ol { padding-left:22px; line-height:1.7; }
+  .kb-steps li { margin-bottom:8px; }
+  @media(max-width:700px) { .kb-guide-grid,.kb-rules-grid{grid-template-columns:1fr;} .kb-daily-forms{gap:6px;} .kb-daily-forms div{padding:9px;} .kb-study-card{padding:18px;} }
+  @media(max-width:370px) { .kb-daily-forms{grid-template-columns:1fr;} }
+</style>
 </head>
 <body class="has-bottom-nav" data-page="knowledge" data-view="knowledge">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -23,41 +64,49 @@
     </div>
     <svg class="hero-wave" viewBox="0 0 1440 100" preserveAspectRatio="none" aria-hidden="true"><path fill="#f8fafc" d="M0,66 C220,102 410,10 696,52 C963,91 1115,99 1440,35 L1440,100 L0,100 Z"></path></svg>
   </header>
-  <main id="main" class="main-content container kb-library">
+  <main id="main" class="main-content container kb-learning">
     <nav class="kb-breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><span>Knowledge Base</span></nav>
-    <section class="section" aria-labelledby="knowledge-current-title">
-      <div class="kb-unit-heading"><span class="kb-unit-chip">ENGLISH FILE A2 · 4TH EDITION</span><h2 id="knowledge-current-title">Study reference · Units 1A–1B</h2><p>Reference material for your completed and current workbook units. Level: A2.1 (Pre-intermediate).</p></div>
-      <div class="kb-topic-nav" aria-label="Current learning materials">
-        <a href="lesson.html?id=lesson-1"><small>WORKBOOK · 1A</small><strong>Are you? Can you? Do you? Did you?</strong><span>→</span></a>
-        <a href="grammar-topic.html?id=grammar-questions-word-order"><small>GRAMMAR · 1A</small><strong>Word order in questions</strong><span>→</span></a>
-        <a href="vocabulary.html?id=vocab-lesson-1"><small>VOCABULARY · 1A</small><strong>Common verb phrases</strong><span>→</span></a>
-        <a href="lesson.html?id=lesson-2"><small>WORKBOOK · 1B</small><strong>The perfect date?</strong><span>→</span></a>
-        <a href="grammar-topic.html?id=grammar-present-simple-1b"><small>GRAMMAR · 1B</small><strong>Present Simple</strong><span>→</span></a>
-        <a href="vocabulary.html?id=vocab-lesson-2"><small>VOCABULARY · 1B</small><strong>Describing people</strong><span>→</span></a>
+    <section class="section" aria-labelledby="kb-today-title">
+      <div class="kb-study-head"><div><span class="eyebrow">DAILY PRACTICE · 1 VERB A DAY</span><h2 id="kb-today-title">Irregular verb of the day</h2><p>Каждый день — одна новая форма для визуального повторения. Карточка автоматически меняется по дате на устройстве.</p></div><a class="btn btn-primary" href="vocabulary.html?id=vocab-irregular-verbs">Карточки и тест →</a></div>
+      <article class="kb-daily-card" id="kb-daily-card" aria-live="polite">
+        <p class="muted">Загружаем глагол дня…</p>
+      </article>
+    </section>
+
+    <section class="section" aria-labelledby="kb-start-title">
+      <div class="kb-study-head"><div><span class="eyebrow">ENGLISH FILE A2 · 4TH EDITION</span><h2 id="kb-start-title">Your learning guide</h2><p>Короткие схемы и ссылки на подробные темы из Workbook 1A–1B.</p></div></div>
+      <div class="kb-guide-grid">
+        <article class="kb-study-card"><span class="kb-card-label">1A · QUESTIONS</span><h3>Are you? Can you? Do you? Did you?</h3><p>Как выбрать вспомогательный глагол и правильно задать общий или специальный вопрос.</p><div class="kb-mini-pattern"><b>Do</b> you live here?<br><b>Did</b> you go out yesterday?<br><b>Where</b> do you live?</div><a href="grammar-topic.html?id=grammar-questions-word-order">Объяснение и практика →</a></article>
+        <article class="kb-study-card"><span class="kb-card-label">1B · PRESENT SIMPLE</span><h3>Habits, facts and routines</h3><p>Утверждения, отрицания, вопросы, окончания -s/-es и наречия частотности.</p><div class="kb-mini-pattern">She <b>works</b>.<br>He <b>doesn't work</b>.<br><b>Does</b> she work?</div><a href="grammar-topic.html?id=grammar-present-simple-1b">Объяснение и практика →</a></article>
+      </div>
+      <div class="kb-topic-nav kb-lesson-nav" aria-label="Workbooks and vocabulary">
+        <a href="lesson.html?id=lesson-1"><small>HOMEWORK 1A</small><strong>Questions</strong><span>→</span></a>
+        <a href="vocabulary.html?id=vocab-lesson-1"><small>VOCABULARY 1A</small><strong>Verb phrases</strong><span>→</span></a>
+        <a href="lesson.html?id=lesson-2"><small>HOMEWORK 1B</small><strong>The perfect date?</strong><span>→</span></a>
+        <a href="vocabulary.html?id=vocab-lesson-2"><small>VOCABULARY 1B</small><strong>Describing people</strong><span>→</span></a>
       </div>
     </section>
-    <section class="section" aria-labelledby="knowledge-summary-title">
-      <article class="kb-article"><span class="kb-section-label"><span>1A</span> QUICK REFERENCE</span><h2 id="knowledge-summary-title">Questions in English</h2>
-        <p class="muted">Use the detailed grammar page for rules, comparisons, and exercises. These are the core patterns from your current lesson.</p>
-        <div class="table-wrap"><table><thead><tr><th>Situation</th><th>Question pattern</th><th>Example</th></tr></thead><tbody>
-          <tr><td>Present Simple</td><td>Do / Does + subject + verb</td><td>Where do you live?</td></tr>
-          <tr><td>Past Simple</td><td>Did + subject + base verb</td><td>What did you do last night?</td></tr>
-          <tr><td>be</td><td>Am / Is / Are / Was / Were + subject</td><td>Where were you born?</td></tr>
-          <tr><td>can</td><td>Can + subject + base verb</td><td>Can I help you?</td></tr>
-        </tbody></table></div>
-        <p><a class="kb-secondary-link" href="grammar-topic.html?id=grammar-questions-word-order">Read the full explanation and practise →</a></p>
-      </article>
-    <section class="section" aria-labelledby="knowledge-1b-title">
-      <article class="kb-article"><span class="kb-section-label"><span>1B</span> QUICK REFERENCE</span><h2 id="knowledge-1b-title">Present Simple</h2>
-        <p class="muted">Facts, habits, describing people and adverbs of frequency. Full explanations and practice are in Grammar 1B.</p>
-        <div class="table-wrap"><table><thead><tr><th>Form</th><th>Structure</th><th>Example</th></tr></thead><tbody>
-          <tr><td>Positive</td><td>he/she/it + verb-s/-es</td><td>She works as a vet.</td></tr>
-          <tr><td>Negative</td><td>don’t / doesn’t + base verb</td><td>He doesn’t go out often.</td></tr>
-          <tr><td>Question</td><td>do / does + subject + base verb</td><td>Does Anna live here?</td></tr>
-          <tr><td>Frequency</td><td>usually/often before the main verb, after be</td><td>She is always busy.</td></tr>
-        </tbody></table></div>
-        <p><a class="kb-secondary-link" href="grammar-topic.html?id=grammar-present-simple-1b">Read Present Simple and practise →</a></p>
-      </article>
+
+    <section class="section" aria-labelledby="kb-forms-title">
+      <div class="kb-study-head"><div><span class="eyebrow">QUICK REFERENCE</span><h2 id="kb-forms-title">When do we use each verb form?</h2><p>Эти три формы помогают распознавать времена и правильно строить предложения.</p></div></div>
+      <div class="kb-rules-grid">
+        <article class="kb-rule"><b>V1 · Infinitive / base form</b><p>Вопросы с <em>do / does / did</em>, после <em>can</em> и в Present Simple.</p><p class="kb-sentence">Did you <strong>go</strong>? / I <strong>go</strong> to school.</p></article>
+        <article class="kb-rule"><b>V2 · Past Simple</b><p>Для утверждений о событиях в прошлом. После <em>did</em> нужна V1, не V2.</p><p class="kb-sentence">Yesterday I <strong>went</strong> home.</p></article>
+        <article class="kb-rule"><b>V3 · Past participle</b><p>Третья форма понадобится в Present Perfect и других конструкциях (позднее).</p><p class="kb-sentence">I have <strong>gone</strong> home.</p></article>
+      </div>
+      <p class="kb-note">Важно: <b>read — read — read</b> пишется одинаково, но в Past Simple и V3 произносится /red/. У модального <b>can</b> нет обычной третьей формы; в списке стоит прочерк. Варианты <b>dreamt/dreamed</b> и <b>learnt/learned</b> допустимы.</p>
+    </section>
+
+    <section class="section" aria-labelledby="kb-irregular-title">
+      <div class="kb-study-head"><div><span class="eyebrow">REFERENCE TABLE · EN → RU</span><h2 id="kb-irregular-title">Irregular verbs</h2><p>Все глаголы из присланной таблицы: V1, V2, V3 и русский перевод. Найди нужный глагол или повторяй с карточками.</p></div><a class="btn btn-secondary" href="vocabulary.html?id=vocab-irregular-verbs">Practice all verbs →</a></div>
+      <label class="kb-search-label" for="kb-verb-search">Найти глагол или перевод</label>
+      <input class="kb-verb-search" id="kb-verb-search" type="search" autocomplete="off" placeholder="Например: go, went, писать, спать" aria-controls="kb-irregular-table">
+      <div class="kb-table-wrap"><table class="kb-verbs-table" id="kb-irregular-table"><thead><tr><th scope="col">V1 · Present</th><th scope="col">V2 · Past Simple</th><th scope="col">V3 · Past participle</th><th scope="col">Перевод</th></tr></thead><tbody id="kb-irregular-body"><tr><td colspan="4">Загружаем список…</td></tr></tbody></table></div>
+      <p class="kb-results" id="kb-verb-count" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="section" aria-labelledby="kb-how-title">
+      <article class="kb-study-card kb-steps"><span class="eyebrow">STUDY ROUTINE</span><h2 id="kb-how-title">Как учить слова эффективнее</h2><ol><li><b>Смотри</b> глагол дня и пробуй вспомнить две другие формы без подсказки.</li><li><b>Открывай карточки</b> в Vocabulary — перевод появляется после переворота.</li><li><b>Проходи тест</b> — только правильный ответ в тесте отмечает слово как изученное.</li><li><b>Отмечай сложные</b> слова кнопкой Difficult и повторяй их отдельно.</li></ol><p><a class="kb-secondary-link" href="vocabulary.html?id=vocab-irregular-verbs">Перейти к тренировке →</a></p></article>
     </section>
   </main>
   <nav class="bottom-nav" aria-label="Main navigation">
@@ -67,5 +116,43 @@
     <a class="nav-link" data-nav="vocabulary" href="vocabulary-hub.html"><span class="nav-icon">💥</span><span>Vocab</span></a>
   </nav>
   <div class="toast" id="app-toast" role="status" aria-live="polite"></div>
+<script>
+  // Read-only reference uses the same canonical vocabulary source as cards/tests.
+  document.addEventListener('DOMContentLoaded', () => {
+    const topic = (window.VOCABULARY_DATA || []).find(item => item.id === 'vocab-irregular-verbs');
+    const verbs = Array.isArray(topic?.words) ? topic.words : [];
+    const body = document.getElementById('kb-irregular-body');
+    const daily = document.getElementById('kb-daily-card');
+    const count = document.getElementById('kb-verb-count');
+    const search = document.getElementById('kb-verb-search');
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    if (!verbs.length) {
+      daily.textContent = 'Список пока недоступен. Обновите страницу.';
+      body.innerHTML = '<tr><td colspan="4">Данные не найдены.</td></tr>';
+      return;
+    }
+    // Browser-local calendar day: daily selection is stable all day and advances on refresh.
+    const today = new Date();
+    const dateKey = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+    const startDay = Date.UTC(2026, 9, 23);
+    const index = ((Math.floor((dateKey - startDay) / 86400000) % verbs.length) + verbs.length) % verbs.length;
+    const word = verbs[index];
+    daily.innerHTML = `<span class="kb-date">${esc(today.toLocaleDateString('ru-RU',{day:'numeric',month:'long',year:'numeric'}))} · Глагол ${index + 1} из ${verbs.length}</span>
+      <div class="kb-daily-verb">${esc(word.base)}</div><div class="kb-daily-forms">
+      <div><span>V1 · Present</span><strong>${esc(word.base)}</strong></div>
+      <div><span>V2 · Past</span><strong>${esc(word.past)}</strong></div>
+      <div><span>V3 · Participle</span><strong>${esc(word.participle)}</strong></div></div>
+      <p class="kb-ru"><strong>Перевод:</strong> ${esc(word.ru)}</p>
+      <p class="muted">Попробуй произнести все три формы и вспомнить перевод без подсказки.</p>`;
+    const drawTable = () => {
+      const q = search.value.trim().toLocaleLowerCase('ru');
+      const matches = verbs.filter(v => [v.base,v.past,v.participle,v.ru].some(x=>String(x).toLocaleLowerCase('ru').includes(q)));
+      body.innerHTML = matches.length ? matches.map(v=>`<tr><td>${esc(v.base)}</td><td>${esc(v.past)}</td><td>${esc(v.participle)}</td><td>${esc(v.ru)}</td></tr>`).join('') : '<tr><td colspan="4">Не найдено. Попробуйте другое слово.</td></tr>';
+      count.textContent = `Показано: ${matches.length} из ${verbs.length}`;
+    };
+    search.addEventListener('input', drawTable);
+    drawTable();
+  });
+</script>
 </body>
 </html>
