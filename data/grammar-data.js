@@ -10,12 +10,109 @@ window.GRAMMAR_DATA = [
     "revealAnswersOnError": false,
     "studyGuide": {
       "eyebrow": "English File A2 · Unit 1A",
-      "intro": "Как правильно строить вопросы в Present Simple, Past Simple, с be и can.",
+      "intro": "Чем отличаются Are you?, Can you?, Do you?, Did you? и специальные вопросы — с понятными схемами, переводами и сопоставлениями.",
       "promise": "После объяснения — 4 разных упражнения, всего 16 заданий. Тема пройдена только при результате 16/16.",
       "sections": [
         {
-          "id": "ef-1a-grammar-1",
+          "id": "ef-1a-grammar-compare",
           "number": "01",
+          "kicker": "Сравнение",
+          "title": "Are you? Can you? Do you? Did you? — что выбрать и почему",
+          "intro": "В русском мы часто меняем только интонацию. В английском тип вопроса показывает, говорим ли мы о состоянии, возможности, регулярном действии или событии в прошлом. Сначала определяем смысл, затем выбираем первое слово.",
+          "blocks": [
+            {
+              "type": "table",
+              "title": "Четыре разных вопроса — четыре смысла",
+              "headers": [
+                "Начало",
+                "Когда используем",
+                "Общий вопрос",
+                "Специальный вопрос"
+              ],
+              "rows": [
+                [
+                  "Are you…?",
+                  "be: кто ты / где ты / какой ты сейчас",
+                  "Are you tired? — Ты устала?",
+                  "Where are you from? — Откуда ты?"
+                ],
+                [
+                  "Can you…?",
+                  "can: умение, возможность, просьба",
+                  "Can you swim? — Ты умеешь плавать?",
+                  "What can you do? — Что ты умеешь?"
+                ],
+                [
+                  "Do you…?",
+                  "Present Simple: привычка, факт, регулярное действие",
+                  "Do you work? — Ты работаешь?",
+                  "Where do you work? — Где ты работаешь?"
+                ],
+                [
+                  "Did you…?",
+                  "Past Simple: завершённое действие в прошлом",
+                  "Did you work yesterday? — Ты работала вчера?",
+                  "Where did you work last year? — Где ты работала в прошлом году?"
+                ]
+              ]
+            },
+            {
+              "type": "contrast",
+              "title": "Сравни смысл — похожие слова, разные вопросы",
+              "left": {
+                "label": "Be — состояние / местонахождение",
+                "pattern": "Are you at home?",
+                "meaning": "Ты дома сейчас? Are уже форма глагола be, поэтому do здесь не нужен.",
+                "examples": [
+                  "Are you a student?",
+                  "Are you happy?",
+                  "Where are you?"
+                ]
+              },
+              "right": {
+                "label": "Do — действие / привычка",
+                "pattern": "Do you stay at home on Sundays?",
+                "meaning": "Ты остаёшься дома по воскресеньям? Есть основной глагол stay, поэтому в Present Simple нужен do.",
+                "examples": [
+                  "Do you study English?",
+                  "Do you live here?",
+                  "Where do you study?"
+                ]
+              }
+            },
+            {
+              "type": "examples",
+              "title": "Как меняется вопрос со временем и значением",
+              "rows": [
+                {
+                  "en": "Can you drive? — Yes, I can. / No, I can’t.",
+                  "ru": "Умение водить машину; не спрашиваем, водила ли ты вчера."
+                },
+                {
+                  "en": "Do you drive to work? — Yes, I do. / No, I don’t.",
+                  "ru": "Привычка: ездишь ли ты на работу на машине."
+                },
+                {
+                  "en": "Did you drive yesterday? — Yes, I did. / No, I didn’t.",
+                  "ru": "Одно действие вчера; после did используется drive, не drove."
+                },
+                {
+                  "en": "Are you driving now? — Yes, I am. / No, I’m not.",
+                  "ru": "Действие именно сейчас — Present Continuous: am/is/are + -ing; не путай с Are you + прилагательное."
+                }
+              ]
+            },
+            {
+              "type": "note",
+              "title": "Главное правило",
+              "text": "Вопрос с be: Are you…? Вопрос с can: Can you + глагол? Вопрос о привычке: Do you + глагол? Вопрос о прошлом: Did you + глагол? В одном обычном вопросе не смешиваем «Are you do…?» или «Do you can…?».",
+              "tone": "remember"
+            }
+          ]
+        },
+        {
+          "id": "ef-1a-grammar-1",
+          "number": "02",
           "kicker": "Правило",
           "title": "Как устроен вопрос",
           "intro": "В обычном вопросе порядок слов отличается от утверждения.",
@@ -66,7 +163,7 @@ window.GRAMMAR_DATA = [
         },
         {
           "id": "ef-1a-grammar-2",
-          "number": "02",
+          "number": "03",
           "kicker": "Правило",
           "title": "Present Simple: do / does",
           "intro": "Для привычек, фактов и регулярных действий. После do/does глагол всегда в начальной форме.",
@@ -122,7 +219,7 @@ window.GRAMMAR_DATA = [
         },
         {
           "id": "ef-1a-grammar-3",
-          "number": "03",
+          "number": "04",
           "kicker": "Правило",
           "title": "Past Simple: did",
           "intro": "В вопросах о завершённых событиях используем did перед подлежащим и начальную форму смыслового глагола.",
@@ -175,7 +272,7 @@ window.GRAMMAR_DATA = [
         },
         {
           "id": "ef-1a-grammar-4",
-          "number": "04",
+          "number": "05",
           "kicker": "Правило",
           "title": "Вопросы с be: am / is / are / was / were",
           "intro": "С глаголом be не нужны do, does или did. Ставим be перед подлежащим.",
@@ -226,7 +323,7 @@ window.GRAMMAR_DATA = [
         },
         {
           "id": "ef-1a-grammar-5",
-          "number": "05",
+          "number": "06",
           "kicker": "Правило",
           "title": "Модальный глагол can",
           "intro": "Can уже стоит перед подлежащим: никаких do/does/did.",
@@ -263,11 +360,62 @@ window.GRAMMAR_DATA = [
         },
         {
           "id": "ef-1a-grammar-6",
-          "number": "06",
+          "number": "07",
           "kicker": "Правило",
           "title": "Специальные вопросы и типичные ошибки",
-          "intro": "What, Where, When, How often, What kind of... обычно стоят в начале вопроса.",
+          "intro": "Общий вопрос (Yes/No question) начинается с am/is/are, can, do/does или did, и ответом может быть Yes или No. Специальный вопрос (Wh-question) начинается с вопросительного слова и просит конкретную информацию.",
           "blocks": [
+            {
+              "type": "table",
+              "title": "Сравнение общего и специального вопроса",
+              "headers": [
+                "Тип",
+                "Схема",
+                "Примеры"
+              ],
+              "rows": [
+                [
+                  "Общий — с be",
+                  "Are + you + …?",
+                  "Are you hungry? — Yes, I am. / No, I’m not."
+                ],
+                [
+                  "Специальный — с be",
+                  "Where + are + you + …?",
+                  "Where are you from? — I’m from Russia."
+                ],
+                [
+                  "Общий — с can",
+                  "Can + you + verb?",
+                  "Can you speak Italian? — Yes, I can."
+                ],
+                [
+                  "Специальный — с can",
+                  "What + can + you + verb?",
+                  "What languages can you speak? — English and Russian."
+                ],
+                [
+                  "Общий — с do/does",
+                  "Do/Does + subject + verb?",
+                  "Do you work? — Yes, I do."
+                ],
+                [
+                  "Специальный — с do/does",
+                  "Where + do/does + subject + verb?",
+                  "Where do you work? — At a school."
+                ],
+                [
+                  "Общий — с did",
+                  "Did + subject + verb?",
+                  "Did you go out? — Yes, I did."
+                ],
+                [
+                  "Специальный — с did",
+                  "When + did + subject + verb?",
+                  "When did you go out? — Last Saturday."
+                ]
+              ]
+            },
             {
               "type": "table",
               "title": "Формула по типам",
@@ -320,12 +468,40 @@ window.GRAMMAR_DATA = [
                   "ru": "С were меняем порядок без did."
                 }
               ]
+            },
+            {
+              "type": "examples",
+              "title": "Как спросить о разных деталях",
+              "rows": [
+                {
+                  "en": "Who are you? / Where are you? / How old are you?",
+                  "ru": "Кто? Где? Сколько лет? — используем be."
+                },
+                {
+                  "en": "What do you do? / Where do you live? / How often do you go out?",
+                  "ru": "Работа, место проживания и частота привычных действий — do/does."
+                },
+                {
+                  "en": "What did you do last night? / Where did you go?",
+                  "ru": "Что ты делала вчера вечером? Куда ходила? — did + глагол в начальной форме."
+                },
+                {
+                  "en": "What can you cook? / How well can you swim?",
+                  "ru": "Какие блюда ты умеешь готовить? Насколько хорошо плаваешь? — can + глагол."
+                }
+              ]
+            },
+            {
+              "type": "note",
+              "title": "Важный особый случай: Who…? — вопрос к подлежащему",
+              "text": "Если Who или What сами обозначают того, кто выполняет действие, в обычном вопросе часто не нужны do/does/did: Who called you? — Кто тебе звонил? (но: Who did you call? — Кому ты звонила?). На уровне A2 сначала запомни стандартные схемы в таблице выше.",
+              "tone": "important"
             }
           ]
         },
         {
           "id": "ef-1a-grammar-7",
-          "number": "07",
+          "number": "08",
           "kicker": "Правило",
           "title": "Как выбрать правильную структуру",
           "intro": "Сначала определи основной глагол и время.",
@@ -361,6 +537,12 @@ window.GRAMMAR_DATA = [
               "title": "Проверка смысла",
               "text": "Короткий ответ часто показывает вспомогательный глагол: Do you...? — Yes, I do. Did you...? — No, I didn’t. Для Who как подлежащего (Who lives here?) do/does обычно не нужен.",
               "tone": "important"
+            },
+            {
+              "type": "note",
+              "title": "Проверка перед ответом",
+              "text": "1) Вопрос о состоянии/месте/профессии? Выбирай be. 2) О возможности/умении? Can. 3) Об обычном действии? Do/Does + глагол. 4) О завершённом действии? Did + глагол. 5) Нужна конкретная информация? Добавь What, Where, When, How often и т. п. в начало.",
+              "tone": "remember"
             }
           ]
         }

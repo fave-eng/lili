@@ -1708,6 +1708,13 @@
       </div>`;
     }
 
+    if (item.example && item.exampleMode === 'matching-phrase') {
+      return `<div class="exercise-item exercise-example lesson-match-example" data-exercise-item="${escapeHtml(itemId)}">
+        <div class="exercise-item-header">${numberMarkup}<span class="exercise-prompt">${prompt}</span></div>
+        <div class="exercise-control"><select disabled aria-label="Example match"><option selected>${escapeHtml(item.exampleAnswer || '')}</option></select></div>
+      </div>`;
+    }
+
     if (item.example && item.exampleMode === 'select') {
       const segments = Array.isArray(item.segments) ? item.segments : [];
       const options = Array.isArray(item.options) ? item.options : [];
@@ -1837,9 +1844,7 @@
     const number = item.number === undefined ? index + 1 : item.number;
     const segments = Array.isArray(item.segments) ? item.segments : [];
     const inputId = `dialogue-${blockId}-${itemId}`.replace(/[^a-zA-Z0-9_-]/g, '-');
-    const gapNumber = number === '' || number === null
-      ? ''
-      : `<sup class="dialogue-gap-number">${escapeHtml(number)}</sup>`;
+    const gapNumber = ''; // Conversation number belongs above each A/B pair, never inside the line.
 
     if (item.example) {
       if (segments.length >= 2) {
@@ -1949,7 +1954,7 @@
         const entry = itemMap.get(safeText(itemId));
         return entry ? renderDialogueItem(entry.item, blockId, entry.index) : '';
       }).filter(Boolean).join(' ');
-      const rowNumber = line.number !== undefined ? `<span class="dialogue-row-number">${escapeHtml(line.number)}</span>` : '<span class="dialogue-row-number"></span>';
+      const rowNumber = line.number !== undefined ? `<span class="dialogue-row-number">${escapeHtml(line.number)}</span>` : '<span class="dialogue-row-number" aria-hidden="true"></span>';
       return `<div class="dialogue-line">${rowNumber}<span class="dialogue-speaker" aria-label="Speaker ${speaker}">${speaker}</span><div class="dialogue-utterance">${text}${text && lineItems ? ' ' : ''}${lineItems}</div></div>`;
     }).join('')}</div>`;
   }
@@ -2133,7 +2138,7 @@
         ? `<div class="exercise-sticky-layout"><div class="exercise-sticky-media">${image}</div><div class="exercise-sticky-content">${intro}${exerciseContent}</div></div>`
         : `${image}${intro}${exerciseContent}`;
       return `<article class="card lesson-block exercise-card${block.layout === 'dialogue' ? ' dialogue-card' : ''}${hasStickyImage ? ' has-sticky-image' : ''}" data-task="${escapeHtml(id)}" data-type="exercise">
-        <div class="exercise-heading">${Object.prototype.hasOwnProperty.call(block, 'eyebrow') ? (safeText(block.eyebrow) ? `<span class="eyebrow">${escapeHtml(safeText(block.eyebrow))}</span>` : '') : '<span class="eyebrow">Exercise</span>'}<h3>${title}</h3>${block.instructions ? `<p class="muted exercise-instructions">${escapeHtml(block.instructions)}</p>` : ''}${player}${wordBank}${wordBanks}</div>
+        <div class="exercise-heading">${Object.prototype.hasOwnProperty.call(block, 'eyebrow') ? (safeText(block.eyebrow) ? `<span class="eyebrow">${escapeHtml(safeText(block.eyebrow))}</span>` : '') : '<span class="eyebrow">Exercise</span>'}<h3>${title}</h3>${block.instructions && safeText(block.title).replace(/^[a-z]\s*·\s*/i, '').trim().toLowerCase().replace(/[.!?]+$/, '') !== safeText(block.instructions).trim().toLowerCase().replace(/[.!?]+$/, '') ? `<p class="muted exercise-instructions">${escapeHtml(block.instructions)}</p>` : ''}${player}${wordBank}${wordBanks}</div>
         ${exerciseBody}
       </article>`;
     }

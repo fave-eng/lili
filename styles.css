@@ -3697,3 +3697,40 @@ label.odd-option {
 .lesson-linked-locked .lesson-linked-row { display:none; }
 .exercise-card.has-sticky-image .exercise-sticky-media img { object-fit:contain; width:100%; height:auto; }
 @media(max-width:700px) { .lesson-order-palette,.lesson-order-target{gap:5px} .lesson-order-word{padding:6px 9px} .exercise-card.has-sticky-image .exercise-sticky-media{position:static} }
+
+/* Lili · English File 4e A2 · workbook 1A usability corrections (23 Oct 2026). */
+[data-task="v-1a"] .exercise-items { gap: 8px; }
+[data-task="v-1a"] .exercise-item:not(.exercise-example) { display:grid; grid-template-columns:minmax(100px, 1fr) minmax(0,1.65fr); align-items:center; gap:12px; padding:12px 16px; }
+[data-task="v-1a"] .exercise-item:not(.exercise-example) .exercise-item-header { margin:0; }
+[data-task="v-1a"] .exercise-item:not(.exercise-example) .exercise-control { padding:0; min-width:0; }
+[data-task="v-1a"] .exercise-item select { width:100%; max-width:none; min-height:46px; white-space:normal; font-size:.92rem; }
+[data-task="v-1a"] .exercise-item:not(.exercise-example) > .feedback { grid-column:1/-1; }
+[data-task="v-1a"] .lesson-match-example { display:grid; grid-template-columns:minmax(100px,1fr) minmax(0,1.65fr); gap:12px; align-items:center; padding:12px 16px; }
+[data-task="v-1a"] .lesson-match-example .exercise-item-header { margin:0; }
+[data-task="v-1a"] .lesson-match-example .exercise-control { padding:0; min-width:0; }
+[data-task="v-1b"] .dialogue-exercise { gap:0; padding:16px; border-radius:0 0 14px 14px; }
+[data-task="v-1b"] .dialogue-line { display:grid; grid-template-columns: 28px 35px minmax(0,1fr); gap:10px; align-items:start; padding:11px 13px; border-radius:0; box-shadow:none; border-bottom:0; }
+[data-task="v-1b"] .dialogue-line:first-child { border-radius:12px 12px 0 0; }
+[data-task="v-1b"] .dialogue-line:last-child { border-radius:0 0 12px 12px; border-bottom:1px solid #dce4ee; }
+[data-task="v-1b"] .dialogue-row-number { display:flex; justify-content:center; align-items:center; color:#64748b; font-size:.84rem; font-weight:800; min-height:34px; }
+[data-task="v-1b"] .dialogue-speaker { width:34px; height:34px; }
+[data-task="v-1b"] .dialogue-utterance { grid-column:3; width:auto; min-width:0; padding-top:5px; line-height:1.85; font-weight:550; text-wrap:wrap; overflow-wrap:normal; }
+[data-task="v-1b"] .dialogue-item, [data-task="v-1b"] .dialogue-plain-text { display:inline; font-weight:500; }
+[data-task="v-1b"] .dialogue-gap-input { width:clamp(94px,18vw,150px); padding:5px 8px; height:38px; min-height:38px; font-size:.96rem; font-weight:650; }
+[data-task="v-1b"] .dialogue-line:nth-child(even) { background:#fafbff; }
+[data-task="g-2c"] .exercise-item-inline-row { align-items:center; }
+[data-task="g-2c"] .exercise-item:not(.exercise-example) .sentence-gaps { display:flex; flex-wrap:wrap; align-items:center; gap:8px; line-height:1.6; }
+[data-task="g-2c"] .gap-input-wide { display:inline-block; flex: 1 1 240px; width:min(100%,390px); max-width:100%; min-height:44px; text-align:left; }
+[data-task="g-2c"] .exercise-item-inline-content { width:100%; }
+[data-task="g-2c"] .exercise-context { margin:0 0 8px; }
+[data-task="g-2c"] .exercise-item .feedback { margin-top:7px; }
+@media(max-width:620px) {
+  [data-task="v-1a"] .exercise-item:not(.exercise-example),[data-task="v-1a"] .lesson-match-example { grid-template-columns:1fr; gap:7px; }
+  [data-task="v-1b"] .dialogue-exercise { padding:8px; }
+  [data-task="v-1b"] .dialogue-line { grid-template-columns:20px 29px minmax(0,1fr); gap:7px; padding:9px 7px; }
+  [data-task="v-1b"] .dialogue-speaker { width:28px;height:28px; }
+  [data-task="v-1b"] .dialogue-row-number { min-height:28px; }
+  [data-task="v-1b"] .dialogue-utterance { padding-top:2px; line-height:1.85; font-size:.91rem; }
+  [data-task="v-1b"] .dialogue-gap-input { width:min(100%,130px); }
+  [data-task="g-2c"] .gap-input-wide { min-width:180px; }
+}

@@ -32,8 +32,9 @@
           "id": "1",
           "number": 1,
           "example": true,
-          "exampleTextOnly": true,
-          "prompt": "be born  —  i"
+          "prompt": "be born",
+          "exampleAnswer": "in Kraków, Poland, in 1997",
+          "exampleMode": "matching-phrase"
         },
         {
           "id": "2",
@@ -41,15 +42,15 @@
           "input": "select",
           "prompt": "do",
           "options": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i"
+            "a film, a TV series",
+            "in a house, with friends",
+            "an email, a magazine",
+            "two sisters, a pet",
+            "to the cinema, on holiday",
+            "exercise, sport",
+            "a foreign language, English",
+            "dance music, R&B",
+            "in Kraków, Poland, in 1997"
           ],
           "answer": 5
         },
@@ -59,15 +60,15 @@
           "input": "select",
           "prompt": "listen to",
           "options": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i"
+            "a film, a TV series",
+            "in a house, with friends",
+            "an email, a magazine",
+            "two sisters, a pet",
+            "to the cinema, on holiday",
+            "exercise, sport",
+            "a foreign language, English",
+            "dance music, R&B",
+            "in Kraków, Poland, in 1997"
           ],
           "answer": 7
         },
@@ -77,15 +78,15 @@
           "input": "select",
           "prompt": "read",
           "options": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i"
+            "a film, a TV series",
+            "in a house, with friends",
+            "an email, a magazine",
+            "two sisters, a pet",
+            "to the cinema, on holiday",
+            "exercise, sport",
+            "a foreign language, English",
+            "dance music, R&B",
+            "in Kraków, Poland, in 1997"
           ],
           "answer": 2
         },
@@ -95,15 +96,15 @@
           "input": "select",
           "prompt": "speak",
           "options": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i"
+            "a film, a TV series",
+            "in a house, with friends",
+            "an email, a magazine",
+            "two sisters, a pet",
+            "to the cinema, on holiday",
+            "exercise, sport",
+            "a foreign language, English",
+            "dance music, R&B",
+            "in Kraków, Poland, in 1997"
           ],
           "answer": 6
         },
@@ -113,15 +114,15 @@
           "input": "select",
           "prompt": "live",
           "options": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i"
+            "a film, a TV series",
+            "in a house, with friends",
+            "an email, a magazine",
+            "two sisters, a pet",
+            "to the cinema, on holiday",
+            "exercise, sport",
+            "a foreign language, English",
+            "dance music, R&B",
+            "in Kraków, Poland, in 1997"
           ],
           "answer": 1
         },
@@ -131,15 +132,15 @@
           "input": "select",
           "prompt": "watch",
           "options": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i"
+            "a film, a TV series",
+            "in a house, with friends",
+            "an email, a magazine",
+            "two sisters, a pet",
+            "to the cinema, on holiday",
+            "exercise, sport",
+            "a foreign language, English",
+            "dance music, R&B",
+            "in Kraków, Poland, in 1997"
           ],
           "answer": 0
         },
@@ -149,15 +150,15 @@
           "input": "select",
           "prompt": "go",
           "options": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i"
+            "a film, a TV series",
+            "in a house, with friends",
+            "an email, a magazine",
+            "two sisters, a pet",
+            "to the cinema, on holiday",
+            "exercise, sport",
+            "a foreign language, English",
+            "dance music, R&B",
+            "in Kraków, Poland, in 1997"
           ],
           "answer": 4
         },
@@ -167,31 +168,20 @@
           "input": "select",
           "prompt": "have",
           "options": [
-            "a",
-            "b",
-            "c",
-            "d",
-            "e",
-            "f",
-            "g",
-            "h",
-            "i"
+            "a film, a TV series",
+            "in a house, with friends",
+            "an email, a magazine",
+            "two sisters, a pet",
+            "to the cinema, on holiday",
+            "exercise, sport",
+            "a foreign language, English",
+            "dance music, R&B",
+            "in Kraków, Poland, in 1997"
           ],
           "answer": 3
         }
       ],
-      "wordBank": [
-        "a  a film, a TV series",
-        "b  in a house, with friends",
-        "c  an email, a magazine",
-        "d  two sisters, a pet",
-        "e  to the cinema, on holiday",
-        "f  exercise, sport",
-        "g  a foreign language, English",
-        "h  dance music, R&B",
-        "i  in Kraków, Poland, in 1997"
-      ],
-      "wordBankLabel": "a–i"
+      "eyebrow": ""
     },
     {
       "type": "exercise",
@@ -423,7 +413,8 @@
           "speaker": "B",
           "text": "In Budapest, in 1998. My mum is Hungarian."
         }
-      ]
+      ],
+      "eyebrow": ""
     },
     {
       "type": "section",
@@ -544,7 +535,8 @@
           "answer": 0
         }
       ],
-      "inlineNumberedItems": true
+      "inlineNumberedItems": true,
+      "eyebrow": ""
     },
     {
       "type": "exercise",
@@ -635,7 +627,8 @@
           "prompt": "a / did / time / nice / you / have",
           "answer": "Did you have a nice time?"
         }
-      ]
+      ],
+      "eyebrow": ""
     },
     {
       "type": "exercise",
@@ -662,7 +655,10 @@
           "contextParts": [
             "(you / do last night)"
           ],
-          "answer": "did you do last night"
+          "answers": [
+            "did you do last night"
+          ],
+          "inputSize": "wide"
         },
         {
           "id": "3",
@@ -675,7 +671,10 @@
           "contextParts": [
             "(TV series / you / watch)"
           ],
-          "answer": "TV series do you watch"
+          "answers": [
+            "TV series do you watch"
+          ],
+          "inputSize": "wide"
         },
         {
           "id": "4",
@@ -688,7 +687,10 @@
           "contextParts": [
             "(your birthday)"
           ],
-          "answer": "is your birthday"
+          "answers": [
+            "is your birthday"
+          ],
+          "inputSize": "wide"
         },
         {
           "id": "5",
@@ -701,7 +703,10 @@
           "contextParts": [
             "(you / from)"
           ],
-          "answer": "are you from"
+          "answers": [
+            "are you from"
+          ],
+          "inputSize": "wide"
         },
         {
           "id": "6",
@@ -714,7 +719,10 @@
           "contextParts": [
             "(you / go / on holiday last year)"
           ],
-          "answer": "did you go on holiday last year"
+          "answers": [
+            "did you go on holiday last year"
+          ],
+          "inputSize": "wide"
         },
         {
           "id": "7",
@@ -727,10 +735,14 @@
           "contextParts": [
             "(you / read)"
           ],
-          "answer": "do you read"
+          "answers": [
+            "do you read"
+          ],
+          "inputSize": "wide"
         }
       ],
-      "inlineNumberedItems": true
+      "inlineNumberedItems": true,
+      "eyebrow": ""
     },
     {
       "type": "exercise",
@@ -800,7 +812,8 @@
         "Where",
         "What kind of books"
       ],
-      "firstQuestion": "Where do you live?"
+      "firstQuestion": "Where do you live?",
+      "eyebrow": ""
     },
     {
       "type": "section",
@@ -945,9 +958,7 @@
         }
       ],
       "layout": "pronunciation-choice-table",
-      "image": "images/ef-a2-1a-sound-guide.svg",
-      "imageAlt": "Vowel sounds in the alphabet: train, tree, egg, boot",
-      "stickyImage": true
+      "eyebrow": ""
     },
     {
       "type": "exercise",
@@ -964,7 +975,8 @@
           "scored": false
         }
       ],
-      "audio": "audio/English_File_4e_Pre-intermediate_WB_1.1.mp3"
+      "audio": "audio/English_File_4e_Pre-intermediate_WB_1.1.mp3",
+      "eyebrow": ""
     },
     {
       "type": "exercise",
@@ -1056,9 +1068,17 @@
           "answer": 5
         }
       ],
-      "image": "images/ef-a2-1a-alphabet-quiz.svg",
-      "imageAlt": "Alphabet quiz: Which letter of the alphabet sounds like...? Letters A, I, O, P, U, Y.",
-      "stickyImage": true
+      "eyebrow": "",
+      "introText": "Which letter of the alphabet sounds like...?",
+      "wordBank": [
+        "A",
+        "I",
+        "O",
+        "P",
+        "U",
+        "Y"
+      ],
+      "wordBankLabel": "Letters"
     }
   ]
 }
