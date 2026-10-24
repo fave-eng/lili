@@ -69,6 +69,10 @@
     if (word.base === 'read' && which === 'past') text = 'Yesterday I read a book.';
     if (word.base === 'read' && which === 'participle') text = 'I have read a book.';
     text = text.replace(/\s*\/\s*/g, ', ');
+    if (window.LiliVocabularySpeech?.speak) {
+      window.LiliVocabularySpeech.speak(text, button);
+      return;
+    }
     synth.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-GB';

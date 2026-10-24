@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="Personal English learning space">
   <title>Vocabulary trainer</title>
-  <link rel="stylesheet" href="styles.css?v=lili-1b-20261023">
+  <link rel="stylesheet" href="styles.css?v=lili-pronunciation-20261024-v1">
   <style>
     .vocab-back-link {
       display: inline-flex;
@@ -60,6 +60,9 @@
     @media (max-width: 520px) {
       .vocab-back-link { font-size: .9rem; }
     }
+    .quiz-pronounce { margin: 2px 0 18px; width: 44px; height: 44px; }
+    .flash-front .flash-pronounce { width: 46px; height: 46px; }
+    .pronounce-btn:disabled { opacity: .5; cursor: not-allowed; }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
@@ -68,7 +71,7 @@
   <script src="data/grammar-data.js?v=lili-1b-20261023" defer></script>
   <script src="app.js?v=lili-forms-20261023-v2" defer></script>
   <link rel="stylesheet" href="irregular-verbs.css?v=20261023-v2">
-  <script src="irregular-verbs.js?v=20261023-v2" defer></script>
+  <script src="irregular-verbs.js?v=lili-pronunciation-20261024-v1" defer></script>
 </head>
 <body class="has-bottom-nav" data-page="vocabulary" data-view="vocabulary">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -114,143 +117,6 @@
   </nav>
   <div class="toast" id="app-toast" role="status" aria-live="polite"></div>
 
-  <script>
-    (() => {
-      'use strict';
-
-      /*
-       * The same pronunciation method as in the reference vocabulary file:
-       * system Web Speech API, British English (en-GB),
-       * standard device speed, pitch and volume.
-       */
-      const speech = window.speechSynthesis;
-      let activeButton = null;
-
-      function stopAudio() {
-        if (speech) speech.cancel();
-        if (activeButton) {
-          activeButton.classList.remove('is-speaking');
-          activeButton = null;
-        }
-      }
-
-      function showAudioError() {
-        const toast = document.getElementById('app-toast');
-        if (!toast) return;
-        toast.textContent = 'Pronunciation is unavailable on this device.';
-        toast.classList.add('show');
-        window.setTimeout(() => toast.classList.remove('show'), 2800);
-      }
-
-      function prepareSpeechText(text) {
-        return String(text || '')
-          .trim()
-          .replace(/\s*\/\s*/g, ' or ');
-      }
-
-      function playPronunciation(text, button = null) {
-        const cleanText = prepareSpeechText(text);
-        if (!cleanText || !speech || typeof SpeechSynthesisUtterance === 'undefined') {
-          showAudioError();
-          return;
-        }
-
-        stopAudio();
-        activeButton = button;
-        button?.classList.add('is-speaking');
-
-        const utterance = new SpeechSynthesisUtterance(cleanText);
-        utterance.lang = 'en-GB';
-        utterance.rate = 1;
-        utterance.pitch = 1;
-        utterance.volume = 1;
-
-        utterance.onend = () => {
-          if (activeButton === button) stopAudio();
-        };
-        utterance.onerror = (event) => {
-          if (event?.error !== 'canceled' && event?.error !== 'interrupted') {
-            showAudioError();
-          }
-          if (activeButton === button) stopAudio();
-        };
-
-        speech.speak(utterance);
-      }
-
-      function makeButton(word, extraClass = '') {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.className = `pronounce-btn ${extraClass}`.trim();
-        button.setAttribute('aria-label', `Listen to the pronunciation: ${word}`);
-        button.title = `Listen: ${word}`;
-        button.textContent = '🔊';
-        button.addEventListener('click', (event) => {
-          event.preventDefault();
-          event.stopPropagation();
-          playPronunciation(word, button);
-        });
-        return button;
-      }
-
-      function decorateFlashcard(root) {
-        const front = root.querySelector('.flash-front');
-        const wordNode = front?.querySelector('.flash-word');
-        if (!front || !wordNode || front.querySelector('.flash-pronounce')) return;
-        front.appendChild(makeButton(wordNode.textContent, 'flash-pronounce'));
-      }
-
-      function decorateWordList(root) {
-        root.querySelectorAll('.word-card').forEach((card) => {
-          if (card.querySelector('.word-card-pronounce')) return;
-          const wordNode = card.querySelector('strong');
-          if (!wordNode) return;
-          card.classList.add('has-pronunciation');
-          card.appendChild(makeButton(wordNode.textContent, 'word-card-pronounce'));
-        });
-      }
-
-      function reorderVocabularyModes(root) {
-        const modes = root.querySelector('#vocab-modes');
-        if (!modes || modes.dataset.orderReady === 'true') return;
-
-        const labels = {
-          all: 'All words',
-          cards: 'Flashcards',
-          difficult: 'Difficult',
-          test: 'Test'
-        };
-        const order = ['all', 'cards', 'difficult', 'test'];
-
-        order.forEach((modeName) => {
-          const button = modes.querySelector(`[data-mode="${modeName}"]`);
-          if (!button) return;
-          button.textContent = labels[modeName];
-          modes.appendChild(button);
-        });
-
-        modes.dataset.orderReady = 'true';
-        const allWordsButton = modes.querySelector('[data-mode="all"]');
-        window.requestAnimationFrame(() => allWordsButton?.click());
-      }
-
-      function decorateVocabulary() {
-        const root = document.getElementById('vocabulary-root');
-        if (!root) return;
-        reorderVocabularyModes(root);
-        decorateFlashcard(root);
-        decorateWordList(root);
-      }
-
-      const root = document.getElementById('vocabulary-root');
-      if (root) {
-        const observer = new MutationObserver(decorateVocabulary);
-        observer.observe(root, { childList: true, subtree: true });
-        decorateVocabulary();
-      }
-
-      window.addEventListener('pagehide', stopAudio);
-    })();
-  </script>
+  <script src="vocabulary-pronunciation.js?v=lili-pronunciation-20261024-v1" defer></script>
 </body>
 </html>
